@@ -1,0 +1,74 @@
+MM8BDM v6 buffed drastically the 100 to 0 HP speed ; closing games much faster ; most weapons can kill in less than 2 seconds if not missing.
+Some DPS in v6 (damage output only, ignoring hitboxes, damage type, side effects etc)
+Bubble : 125
+Crystal (big) : 43
+Wave : 115
+freeze : 60
+TBolt : 51
+Spring : 109
+
+> This v6 change makes DM more healthy as higher damage means your effort are less likely to be redeemed by a fragstealer.
+Xover's purpose is to allow the use of even stronger weapons, but with certain conditions.
+
+1+ Xover weapons are stronger than vanilla
+2+ Xover weapons consume ammo equally from their ingredients, requiring less management, indirectly being more useful
+3+/- Xover weapons require 2 weapons for one XW. While you have less weapons, 8 average weapons might be less useful than 4 more useful ones. Plus you don't need 50 weapons. You can focus on effective attacks rather than plenty of different, weak ones.
+4- They need screws.
+5- Cost a little bit of time to combine.
+6- 2 weapons must be collected before entering xw mode. 1 weapon is needed to benefit from vanilla power.
+  
+  
+  The issue is that XW weapons might not be worth investing conditions into in the current game state for the reward they give.
+  In the current DM state, you might be better off picking the first weapon you find and spam random enemies with it. Low investment, decent kill potential.
+  
+  Two possibilities :
+	> Reduce XW requirements
+	> Improve XW reward
+	
+	> XW reward ? 
+		1) > XW Weapon balance is more OP than vanilla
+				> Higher damage
+				> Better hitbox
+				> Better/ slower speed (depending on projectile type)
+				> better CC
+				> better in general!!
+		2) > XW ammo cost being shared amongs ingredients mean they have a larger ammo capacity before running out. That ammo uses several bars, though, holding too much weapons 
+			can be actually harder to navigate through. 			Combining can help you maintaining a small, different enough set of weapons (maybe 2 to 4 weapons i.e, instead of holding 8+ weapons)
+		It's basically combine what you don't want to keep!
+		3) On death, you respawn with each XW's ingredients instead of losing them.
+			> 2D becomes vanilla ingredients
+			> 3D becomes the vanilla + the 2D, or two TD
+			> 1D are destroyed
+			> This encourages few stronger weapons rather than many lowD weapons. Each downgraded ND weapon on death is a no-screw-refund ; so the more weapons are downgraded,
+					the more screws are lost. 1 5D weapon is more advantaged than 3 2D weapons here.
+					> How are chains affected?
+						> Chains are meant to reduce screw cost on long fusion chains.
+							> Fusion chain size
+							> Fusion initial level
+							> (StartLevel * 100) / (2^(chainSize-1))
+							> StartLevel = [1.0, 2.5]
+							> ChainSize = number of elements in the fusion
+						> Though initial price also increases depending on initial fusion level for two reasons :
+							> Lots of low ND weapons are more vulnerable to death as the n of them will get uncombined. If 5D uncombine is worth as much as 1D uncombine then plenty-of-weapons
+							 gamestyle is penalized.
+							 > Second reason is to soften someone's snowball. Someone dieing with a 5D going back to 4D is thus more penalized than a 2D going back to 1D.
+							 
+							 InitLevel \ Combo        0				1					2				3
+										1						100			150				175			187.5
+										2						150			225				262.5		x
+										3						200			300				x				x
+										4						250			x					x				x
+									
+		
+	> XW requirements ?
+		2 weapons are needed to combine. You need no weapon with mega buster and 1 with vanilla to play. So an extra weapon is needed at least to go xover mode. 
+		Though it's fairly common to pick up a few (3-4) weapons even in vanilla. Also sometimes you just find several weapons before finding an opponent, maps have lots of weapons.
+		> To help with that in large servers, players drop a weapon on death
+			...> What if we not lose everything on death? Depending on how xover-related were your actions with your current life?
+		
+		
+		
+FINAL DECISION : 
+XW weapons are uncombined without refund and their ingredients given on respawn. Vanilla weapons are still destroyed.
+Weapon fusion cost is now higher for higher tier initial ingredient ; each fusion chain does cost screws, but exponentially lower. Base cost decreased.
+Players still drop a copy of a random weapon they owned on death.
