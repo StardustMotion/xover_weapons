@@ -72,3 +72,15 @@ FINAL DECISION :
 XW weapons are uncombined without refund and their ingredients given on respawn. Vanilla weapons are still destroyed.
 Weapon fusion cost is now higher for higher tier initial ingredient ; each fusion chain does cost screws, but exponentially lower. Base cost decreased.
 Players still drop a copy of a random weapon they owned on death.
+
+
+
+
+TO DO NOT FORGET
+COMBINING MUST STOP ON DEATH. IMMEDIATELY.
+
+FASTER UNCOMBINE ANIMATION?
+
+
+432 320
++15
