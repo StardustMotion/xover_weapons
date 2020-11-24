@@ -58,7 +58,19 @@ Xover's purpose is to allow the use of even stronger weapons, but with certain c
 										2						150			225				262.5		x
 										3						200			300				x				x
 										4						250			x					x				x
-									
+							 
+							 InitLevel \ Combo        0				1					2				3
+										1						100			150				175			187.5
+										2						125			185				215		x
+										3						150			225				x				x
+										4						175			x					x				x
+							 
+							 InitLevel \ Combo        0				1					2				3
+										1						100			150				175			187.5
+										2						120			180				210			x
+										3						150			225				x				x
+										4						200			x					x				x
+										
 		
 	> XW requirements ?
 		2 weapons are needed to combine. You need no weapon with mega buster and 1 with vanilla to play. So an extra weapon is needed at least to go xover mode. 
@@ -84,3 +96,13 @@ FASTER UNCOMBINE ANIMATION?
 
 432 320
 +15
+
+appendweapon from empty table : fadeIn short
+
+
+team cover factor : 
+> factor 1 : 16/32 players on your team means overall double living time
+>  factor 2 : 16/32 players on your team still means 32 players collecting screws
+while you live twice as long you won't get 
+
+
