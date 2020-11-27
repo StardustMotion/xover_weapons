@@ -1,0 +1,127 @@
+digraph G {
+    
+    
+    cut -> KW_CUTTER, KW_BOOMERANG
+    guts -> KW_EARTH
+    ice -> KW_ICE
+    bomb -> KW_BOMB
+    fire -> KW_FIRE, KW_SHIELD
+    elec -> KW_ELEC
+    time -> KW_SPACETIME
+    oil -> KW_WATER, KW_BODY
+    
+    bubble -> KW_WATER, KW_CRAWLER
+    metal -> KW_CUTTER
+    heat -> KW_FIRE, KW_CHARGEABLE
+    wood -> KW_NATURE, KW_SHIELD
+    air -> KW_WIND
+    quick -> KW_CUTTER, KW_BOOMERANG
+    crash -> KW_BOMB
+    flash -> KW_SPACETIME
+    
+    magnet -> KW_TARGETER
+    top -> KW_BODY
+    needle -> KW_NATURE
+    shadow -> KW_CUTTER, KW_BOOMERANG
+    gemini -> KW_LIGHT, KW_BOUNCY
+    snake -> KW_NATURE, KW_CRAWLER
+    hard -> KW_BODY
+    spark -> KW_ELEC
+    
+    drill -> KW_BOMB // TARGETER
+    ring -> KW_CUTTER, KW_BOOMERANG
+    dust
+    pharaoh -> KW_FIRE, KW_CHARGEABLE
+    skull -> KW_SHIELD
+    dive -> KW_TARGETER
+    toad -> KW_WATER
+    bright -> KW_LIGHT
+    
+    napalm -> KW_BOMB
+    charge -> KW_BODY
+    gyro -> KW_CUTTER, KW_WIND, KW_TARGETER
+    stone -> KW_EARTH
+    wave -> KW_WATER, KW_CRAWLER
+    crystal -> KW_BOUNCY
+    star -> KW_SHIELD, KW_MELEE
+    gravity -> KW_SPACETIME
+    
+    blizzard -> KW_ICE
+    flame -> KW_FIRE
+    yamato -> KW_CUTTER
+    plant -> KW_NATURE, KW_SHIELD
+    centaur -> KW_LIGHT,  KW_SPACETIME
+    knight -> KW_BOOMERANG // KW_MELEE, KW_BOUNCY, KW_CUTTER
+    wind -> KW_WIND, KW_CRAWLER
+    tomahawk -> KW_CUTTER, KW_NATURE
+    
+    freeze -> KW_ICE
+    shade -> KW_BOUNCY, KW_CHARGEABLE
+    spring -> KW_BOUNCY, KW_CHARGEABLE
+    burst -> KW_BOMB
+    turbo -> KW_FIRE, KW_CRAWLER, KW_SHIELD
+    junk -> KW_SHIELD
+    slash -> KW_CUTTER, KW_BODY
+    cloud -> KW_ELEC, KW_LIGHT
+    
+    astroCrush -> KW_SPACETIME
+    sword -> KW_FIRE, KW_MELEE // CUTTER ?
+    clown -> KW_ELEC, KW_MELEE
+    search -> KW_TARGETER, KW_CHARGEABLE
+    aqua -> KW_WATER
+    megaball -> KW_BOUNCY
+    grenade -> KW_BOMB, KW_LIGHT
+    frost -> KW_ICE, KW_CRAWLER
+    tenguTornado -> KW_WIND
+    
+    tenguBlade -> KW_WIND, KW_CUTTER, KW_MELEE // KW_CHARGEABLE, KW_BOUNCY
+    burner -> KW_FIRE
+    ground -> KW_EARTH // KW_CUTTER
+    magic -> KW_BOOMERANG
+    pirate -> KW_BOMB, KW_TARGETER
+    astroCopyVision -> KW_LIGHT,  KW_TARGETER,  KW_SPACETIME
+    cold -> KW_ICE, KW_CRAWLER, KW_SHIELD, KW_BOUNCY
+    dynamo -> KW_ELEC, KW_LIGHT
+    
+    plug -> KW_ELEC, KW_CRAWLER, KW_BOUNCY
+    splash -> KW_LIGHT
+    galaxy -> KW_TARGETER, KW_SPACETIME, KW_BOMB
+    jewel -> KW_SHIELD
+    concrete -> KW_EARTH
+    tornado -> KW_WIND
+    hornet -> KW_NATURE, KW_TARGETER
+    magma -> KW_FIRE, KW_CHARGEABLE
+    
+    solar -> KW_FIRE
+    nitro -> KW_CUTTER, KW_CRAWLER, KW_MELEE
+    strike -> KW_BOUNCY
+    sheep -> KW_ELEC
+    commando -> KW_BOMB, KW_TARGETER
+    chill -> KW_ICE
+    pump -> KW_WATER, KW_SHIELD
+    blade -> KW_CUTTER
+    
+    mercury
+    venus -> KW_WATER, KW_BOMB
+    mars -> KW_BOMB
+    neptune -> KW_WATER
+    jupiter -> KW_ELEC, KW_MELEE
+    saturn -> KW_SHIELD,  KW_SPACETIME
+    uranus -> KW_EARTH
+    pluto -> KW_BODY, KW_CHARGEABLE
+    terra -> KW_LIGHT, KW_TARGETER
+    
+    enker -> KW_SHIELD // KW_CHARGEABLE
+    ballade -> KW_BOMB
+    punk -> KW_CUTTER // KW_BOUNCY
+    quint -> KW_EARTH, KW_MELEE
+    
+    rathor -> KW_CRAWLER, KW_LIGHT, KW_CHARGEABLE
+    
+    
+	
+	
+	
+	metguard1 -> KW_SHIELD, KW_CRAWLER
+    
+}
