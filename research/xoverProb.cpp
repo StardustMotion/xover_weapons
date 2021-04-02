@@ -5,7 +5,7 @@
 #include <iostream>
 #include <random>
 #define MAX_WEAPONS 103
-#define MAX_XOVER_WEAPONS 13
+#define MAX_XOVER_WEAPONS 12 // number of 2D weapons
 
 
 #define KW_NONE -1
@@ -234,7 +234,6 @@ int ingredients[MAX_WEAPONS][5] = {
         { KW_TARGETER, KW_BOMB },	// Blast Missile
         { KW_RM_YAMATO, KW_MELEE },	// Thousand Spear
         { KW_ICE, KW_CHARGEABLE },	// White Rose Cluster
-        { KW_RM_FLASH, KW_CUTTER },	// Thousand Knives
         { KW_BOOMERANG, KW_NATURE },	// Leaf Boomerang
         { KW_SHIELD, KW_ELEC },	// Triad Thunder
         { KW_BOUNCY, KW_CUTTER },	// Sonic Slicer
