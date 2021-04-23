@@ -5,9 +5,7 @@
 #include <iostream>
 #include <random>
 #define MAX_WEAPONS (103-1) // go away ra thor
-#define MAX_2D 14
-
-
+#define MAX_2D 15
 
 
 #define KW_NONE -1 // means "no keyword/unused in this slot"
@@ -28,6 +26,7 @@
 #define KW_CUTTER 11
 
 #define KW_PHYSICAL 20
+#define KW_SOLIDIFIER 21 // SOLID_LIQUID ? hmmm....
 
 
 // Behavior
@@ -109,10 +108,10 @@ int ingredients[MAX_WEAPONS][5] = {
 	{ KW_FIRE, KW_SHIELD, KW_MELEE, KW_NONE, KW_NONE }, // Fire
 	{ KW_CUTTER, KW_BOOMERANG, KW_NONE, KW_NONE, KW_NONE }, // Cut // +BOUNCY?
 	{ KW_NONE, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Time
-	{ KW_MELEE, KW_MOBILITY, KW_NONE, KW_NONE, KW_NONE }, // Oil
+	{ KW_MELEE, KW_MOBILITY, KW_WATER, KW_NONE, KW_NONE }, // Oil
 	
 	//MM2
-	{ KW_CRAWLER, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Bubble
+	{ KW_CRAWLER, KW_WATER, KW_NONE, KW_NONE, KW_NONE }, // Bubble
 	{ KW_CUTTER, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Metal
 	{ KW_FIRE, KW_CHARGEABLE, KW_NONE, KW_NONE, KW_NONE }, // Heat
 	{ KW_SHIELD, KW_NATURE, KW_NONE, KW_NONE, KW_NONE }, // Wood
@@ -138,7 +137,7 @@ int ingredients[MAX_WEAPONS][5] = {
 	{ KW_FIRE, KW_CHARGEABLE, KW_NONE, KW_NONE, KW_NONE }, /// Pharaoh
 	{ KW_SHIELD, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Skull
 	{ KW_TARGETER, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Dive
-	{ KW_NONE, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Toad
+	{ KW_WATER, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Toad
 	{ KW_LIGHT, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Bright
 
 	//MM5
@@ -146,7 +145,7 @@ int ingredients[MAX_WEAPONS][5] = {
 	{ KW_MELEE, KW_MOBILITY, KW_NONE, KW_NONE, KW_NONE }, // Charge
 	{ KW_TARGETER, KW_WIND, KW_CUTTER, KW_NONE, KW_NONE }, // Gyro
 	{ KW_SPREAD, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Stone
-	{ KW_CRAWLER, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Wave
+	{ KW_CRAWLER, KW_WATER, KW_NONE, KW_NONE, KW_NONE }, // Wave
 	{ KW_BOUNCY, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Crystal
 	{ KW_SHIELD, KW_MELEE, KW_NONE, KW_NONE, KW_NONE }, // Star
 	{ KW_NONE, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Gravity
@@ -176,7 +175,7 @@ int ingredients[MAX_WEAPONS][5] = {
 	{ KW_FIRE, KW_MELEE, KW_NONE, KW_NONE, KW_NONE }, // Sword // KW_CUTTER ? XW_TRADITIONNAL
 	{ KW_ELEC, KW_MELEE, KW_MOBILITY, KW_NONE, KW_NONE }, // Clown // KW_BOOMERANG?
 	{ KW_TARGETER, KW_CHARGEABLE, KW_SPREAD, KW_NONE, KW_NONE }, // Search
-	{ KW_NONE, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Aqua
+	{ KW_WATER, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Aqua
 	{ KW_BOUNCY, KW_MOBILITY, KW_NONE, KW_NONE, KW_NONE }, // MegaBall 
 	{ KW_LIGHT, KW_BOMB, KW_NONE, KW_NONE, KW_NONE }, // Grenade
 	{ KW_CRAWLER, KW_ICE, KW_NONE, KW_NONE, KW_NONE }, // Frost
@@ -197,7 +196,7 @@ int ingredients[MAX_WEAPONS][5] = {
 	{ KW_LIGHT, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Splash
 	{ KW_TARGETER, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Galaxy :: BOMB
 	{ KW_SHIELD, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Jewel
-	{ KW_NONE, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Concrete
+	{ KW_SOLIDIFIER, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Concrete
 	{ KW_WIND, KW_MOBILITY, KW_NONE, KW_NONE, KW_NONE }, // Tornado
 	{ KW_TARGETER, KW_NATURE, KW_NONE, KW_NONE, KW_NONE }, // Hornet
 	{ KW_FIRE, KW_CHARGEABLE, KW_SPREAD, KW_NONE, KW_NONE }, // Magma
@@ -208,15 +207,15 @@ int ingredients[MAX_WEAPONS][5] = {
 	{ KW_BOUNCY, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Strike
 	{ KW_ELEC, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Sheep
 	{ KW_BOMB, KW_TARGETER, KW_NONE, KW_NONE, KW_NONE }, // Commando
-	{ KW_ICE, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Chill
-	{ KW_SHIELD, KW_MELEE, KW_NONE, KW_NONE, KW_NONE }, // Pump
+	{ KW_ICE, KW_SOLIDIFIER, KW_NONE, KW_NONE, KW_NONE }, // Chill
+	{ KW_SHIELD, KW_MELEE, KW_WATER, KW_NONE, KW_NONE }, // Pump
 	{ KW_CUTTER, KW_SPREAD, KW_NONE, KW_NONE, KW_NONE }, // Blade
 	
 	//MMV
-	{ KW_NONE, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Mercury
-	{ KW_BOMB, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Venus
+	{ KW_NONE, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Mercury // WATer ?
+	{ KW_WATER, KW_BOMB, KW_NONE, KW_NONE, KW_NONE }, // Venus
 	{ KW_BOMB, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Mars
-	{ KW_NONE, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Neptune // KW_SPREAD
+	{ KW_WATER, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Neptune // KW_SPREAD
 	{ KW_ELEC, KW_MELEE, KW_NONE, KW_NONE, KW_NONE }, // Jupiter
 	{ KW_SHIELD, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Saturn
 	{ KW_NONE, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Uranus
@@ -228,7 +227,6 @@ int ingredients[MAX_WEAPONS][5] = {
 	{ KW_BOMB, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Ballade
 	{ KW_CUTTER, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Punk // +BOUNCY?
 	{ KW_SHIELD, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Enker :: CHARGEABLE
-        
     };
 
     int fusions[MAX_2D][2] = {
@@ -247,6 +245,7 @@ int ingredients[MAX_WEAPONS][5] = {
 	{ KW_BOUNCY, KW_CUTTER },	// Sonic Slicer
 	{ KW_RM_RING, KW_SPREAD },	// Scatter Ring
 	{ KW_FIRE, KW_MOBILITY },	// Yoga Inferno
+	{ KW_WATER, KW_SOLIDIFIER },	// Glue Shot
     };
 
 bool checkFusion(int kw1, int kw2) {
