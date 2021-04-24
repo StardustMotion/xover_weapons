@@ -308,10 +308,10 @@ int main(int argc, char *argv[]) {
     srand(seed);
 	
     int allCombination =  ((MAX_WEAPONS*(MAX_WEAPONS-1))/2);
-    std::cout << "\n----------------------------------------------\n" << 
-        "There exist " << count << " combinations among " << allCombination << " (using the " << MAX_WEAPONS << " vanilla weapons) that is " << 
+    std::cout << "\n--------------------------------------------------------------------------------------------\n" << 
+        "There are " << count << " combinations among " << allCombination << " (using the " << MAX_WEAPONS << " vanilla weapons) that is " << 
         ((double) count /(double) allCombination*100.0) << "%";
-    std::cout << "\n----------------------------------------------\n" << "trying in practice!! picking " << randomPicks << " combinations... with seed " << seed << "...";
+    std::cout << "\n--------------------------------------------------------------------------------------------\n" << "trying in practice!! picking " << randomPicks << " combinations... with seed " << seed << "...";
     int val1; int val2; int acc = 0;
     for (int i = 0; i < randomPicks; i++) {
         val1 = rand() % MAX_WEAPONS;
@@ -328,7 +328,7 @@ int main(int argc, char *argv[]) {
     int ind2 = atoi(argv[2]);
     std::cout << "\n\n" << isFusion(ind1, ind2);*/
 
-    std::cout << "\nfinished! Want to display the combinations ?";
+    std::cout << "\nfinished! Want to display the combinations ? (1 = Yes, anything else = no)\n";
 	bool printCombination;
 	std::cin >> printCombination;
 	if (printCombination) {
@@ -341,5 +341,7 @@ int main(int argc, char *argv[]) {
     }
 
 	}
+	std::cout << "\n\n";
+	system("pause");
     return 0;
 }
