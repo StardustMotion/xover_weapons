@@ -32,7 +32,6 @@
 #define KW_PHYSICAL 20
 #define KW_SOLIDIFIER 21 // SOLID_LIQUID ? hmmm....
 
-
 // Behavior
 #define KW_BOOMERANG 30
 #define KW_SHIELD 31
@@ -56,6 +55,14 @@
 #define KW_RM_RING 102
 #define KW_RM_FLASH 103
 #define KW_RM_YAMATO 104
+#define KW_RM_CUT 105
+#define KW_RM_GUTS 106
+#define KW_RM_ICE 107
+#define KW_RM_FIRE 108
+#define KW_RM_BOMB 109
+#define KW_RM_ELEC 110
+#define KW_RM_TIME 111
+#define KW_RM_OIL 112
 
 //Xover 
 #define KW_METGUARD1 150
@@ -64,6 +71,7 @@
 #define KW_THOUSANDSPEAR1 153
 #define KW_THOUSANDSPEAR2 154
 #define KW_THOUSANDSPEAR3 155
+
 
 // Initializing the table
 bool compatibility[MAX_WEAPONS][MAX_ALL_WEAPONS];
@@ -148,7 +156,8 @@ std::string wepRadicals[MAX_ALL_WEAPONS] = {
 };
 
 int recipes[MAX_5D][2] = 
-{{ KW_CRAWLER, KW_SHIELD },	// Met Guard 1
+{
+	{ KW_CRAWLER, KW_SHIELD },	// Met Guard 1
 	{ KW_CRAWLER, KW_FIRE },	// Melt Creeper
 	{ KW_TARGETER, KW_LIGHT },	// Aiming Laser
 	{ KW_RM_QUICK, KW_FIRE },	// Delay Flame
@@ -186,14 +195,14 @@ int recipes[MAX_5D][2] =
 // JUST PARSE THE XOVER CODE HERE!!!!!
 int ingredients[MAX_ALL_WEAPONS][5] = {  
 	// MM1
-	{ KW_EARTH, KW_PHYSICAL, KW_NONE, KW_NONE, KW_NONE }, // Guts
-	{ KW_BOMB, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Bomb
-	{ KW_ICE, KW_RAPID_FIRE, KW_NONE, KW_NONE, KW_NONE }, // Ice
-	{ KW_ELEC, KW_SPREAD, KW_NONE, KW_NONE, KW_NONE},  // Elec
-	{ KW_FIRE, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Fire
-	{ KW_CUTTER, KW_BOOMERANG, KW_NONE, KW_NONE, KW_NONE }, // Cut
-	{ KW_NONE, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Time
-	{ KW_MELEE, KW_MOBILITY, KW_PHYSICAL, KW_SOLIDIFIER, KW_NONE }, // Oil // -SOLIDIFEIR ?
+	{ KW_EARTH, KW_PHYSICAL, KW_RM_GUTS, KW_NONE, KW_NONE }, // Guts
+	{ KW_BOMB, KW_RM_BOMB, KW_NONE, KW_NONE, KW_NONE }, // Bomb
+	{ KW_ICE, KW_RAPID_FIRE, KW_RM_ICE, KW_NONE, KW_NONE }, // Ice
+	{ KW_ELEC, KW_SPREAD, KW_RM_ELEC, KW_NONE, KW_NONE},  // Elec
+	{ KW_FIRE, KW_RM_FIRE, KW_NONE, KW_NONE, KW_NONE }, // Fire
+	{ KW_CUTTER, KW_BOOMERANG, KW_RM_CUT, KW_NONE, KW_NONE }, // Cut
+	{ KW_RM_TIME, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Time
+	{ KW_MELEE, KW_MOBILITY, KW_PHYSICAL, KW_SOLIDIFIER, KW_RM_OIL }, // Oil // -SOLIDIFEIR ?
 	
 	//MM2
 	{ KW_CRAWLER, KW_WATER, KW_NONE, KW_NONE, KW_NONE }, // Bubble
@@ -332,7 +341,7 @@ int ingredients[MAX_ALL_WEAPONS][5] = {
 	{ KW_RAPID_FIRE, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Yoga Inferno
 	{ KW_NONE, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Glue Shot
 	{ KW_TARGETER, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Super Arrow
-	{ KW_SHIELD, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Ground Dash // NEEDS VERIFICATION !!
+	{ KW_NONE, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Ground Dash // NEEDS VERIFICATION !!
 	
 	// 3D
 	// To add : SHIELD, MELEE, CUTTER
