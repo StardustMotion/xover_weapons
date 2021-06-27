@@ -5,12 +5,14 @@
 #include <iostream>
 #include <random>
 #define MAX_WEAPONS (103-1) // go away ra thor
-#define MAX_2D 17			// "number of 2D weapons"
+#define MAX_2D 19			// "number of 2D weapons"
 #define MAX_3D MAX_2D+4		// "of 3D weapons"
 #define MAX_4D MAX_3D+3 		// etc
 #define MAX_5D MAX_4D+2
 #define MAX_ALL_WEAPONS MAX_WEAPONS+MAX_5D   // fusions + vailla
 
+
+//                    #2.1 Keyword List						//
 
 #define KW_NONE -1 // means "no keyword/unused in this slot"
 #define KW_NULL 0 // a "placeholder" keyword category mostly for debug
@@ -24,13 +26,14 @@
 #define KW_LIGHT 5
 #define KW_BOMB 6
 #define KW_ICE 7
-#define KW_SPACETIME 8
+#define KW_TIME 8
 #define KW_ELEC 9
 #define KW_NATURE 10
 #define KW_CUTTER 11
 
 #define KW_PHYSICAL 20
 #define KW_SOLIDIFIER 21 // SOLID_LIQUID ? hmmm....
+
 
 // Behavior
 #define KW_BOOMERANG 30
@@ -56,13 +59,7 @@
 #define KW_RM_FLASH 103
 #define KW_RM_YAMATO 104
 #define KW_RM_CUT 105
-#define KW_RM_GUTS 106
-#define KW_RM_ICE 107
-#define KW_RM_FIRE 108
-#define KW_RM_BOMB 109
-#define KW_RM_ELEC 110
-#define KW_RM_TIME 111
-#define KW_RM_OIL 112
+
 
 //Xover 
 #define KW_METGUARD1 150
@@ -71,6 +68,8 @@
 #define KW_THOUSANDSPEAR1 153
 #define KW_THOUSANDSPEAR2 154
 #define KW_THOUSANDSPEAR3 155
+
+
 
 
 // Initializing the table
@@ -120,38 +119,20 @@ std::string wepRadicals[MAX_ALL_WEAPONS] = {
 	// FUSIONS
 	
 	// 2D
-	"MetGuard1",
-	"MeltCreeper",
-	"AimingLaser",
-	"DelayFlame",
-	"RecycleInhaler",
-	"ForestWhip",
-	"BlastMissile",
-	"ThousandSpear",
-	"WhiteRoseCluster",
-	"LeafBoomerang",
-	"TriadThunder",
-	"SonicSlicer",
-	"ScatterRing",
-	"YogaInferno",
-	"GlueShot",
-	"SuperArrow",
-	"GroundDash",
+	"MetGuard1", "MeltCreeper", "AimingLaser", "DelayFlame",
+	"RecycleInhaler", "ForestWhip", "BlastMissile", "ThousandSpear",
+	"WhiteRoseCluster", "LeafBoomerang", "TriadThunder", "SonicSlicer",
+	"ScatterRing", "YogaInferno", "GlueShot", "SuperArrow",
+	"GroundDash", "HellfireCutter", "TimeBomb",
 	
 	// 3D
-	"MetGuard2",
-	"ThousandSpearV2",
-	"CountershadingTracer",
-	"IceGatling"
+	"MetGuard2", "ThousandSpearV2", "CountershadingTracer", "IceGatling",
 	
 	// 4D
-	"MetGuard3",
-	"ThousandSpearV3",
-	"ThousandKnives",
+	"MetGuard3", "ThousandSpearV3", "ThousandKnives",
 	
 	// 5D
-	"MetGuard3EX",
-	"ThousandSpearV5",
+	"MetGuard3EX", "ThousandSpearV5",
 	
 };
 
@@ -174,6 +155,8 @@ int recipes[MAX_5D][2] =
 	{ KW_WATER, KW_SOLIDIFIER },	// Glue Shot
 	{ KW_GAME_5, KW_GAME_5 },	// Super Arrow
 	{ KW_EARTH, KW_PHYSICAL },	// Ground Dash
+	{ KW_RM_CUT, KW_FIRE },	// Hellfire Cutter
+	{ KW_TIME, KW_BOMB },	// Time Bomb
 	
 	// 3D
 	{ KW_METGUARD1, KW_SHIELD },	// Met Guard 2
@@ -194,15 +177,14 @@ int recipes[MAX_5D][2] =
 
 // JUST PARSE THE XOVER CODE HERE!!!!!
 int ingredients[MAX_ALL_WEAPONS][5] = {  
-	// MM1
-	{ KW_EARTH, KW_PHYSICAL, KW_RM_GUTS, KW_NONE, KW_NONE }, // Guts
-	{ KW_BOMB, KW_RM_BOMB, KW_NONE, KW_NONE, KW_NONE }, // Bomb
-	{ KW_ICE, KW_RAPID_FIRE, KW_RM_ICE, KW_NONE, KW_NONE }, // Ice
-	{ KW_ELEC, KW_SPREAD, KW_RM_ELEC, KW_NONE, KW_NONE},  // Elec
-	{ KW_FIRE, KW_RM_FIRE, KW_NONE, KW_NONE, KW_NONE }, // Fire
+	{ KW_EARTH, KW_PHYSICAL, KW_NONE, KW_NONE, KW_NONE }, // Guts
+	{ KW_BOMB, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Bomb
+	{ KW_ICE, KW_RAPID_FIRE, KW_NONE, KW_NONE, KW_NONE }, // Ice
+	{ KW_ELEC, KW_SPREAD, KW_NONE, KW_NONE, KW_NONE},  // Elec
+	{ KW_FIRE, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Fire
 	{ KW_CUTTER, KW_BOOMERANG, KW_RM_CUT, KW_NONE, KW_NONE }, // Cut
-	{ KW_RM_TIME, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Time
-	{ KW_MELEE, KW_MOBILITY, KW_PHYSICAL, KW_SOLIDIFIER, KW_RM_OIL }, // Oil // -SOLIDIFEIR ?
+	{ KW_TIME, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Time
+	{ KW_MELEE, KW_MOBILITY, KW_PHYSICAL, KW_SOLIDIFIER, KW_NONE }, // Oil // -SOLIDIFEIR ?
 	
 	//MM2
 	{ KW_CRAWLER, KW_WATER, KW_NONE, KW_NONE, KW_NONE }, // Bubble
@@ -212,7 +194,7 @@ int ingredients[MAX_ALL_WEAPONS][5] = {
 	{ KW_WIND, KW_SPREAD, KW_NONE, KW_NONE, KW_NONE }, // Air
 	{ KW_RM_QUICK, KW_BOOMERANG, KW_CUTTER, KW_RAPID_FIRE, KW_NONE }, // Quick
 	{ KW_BOMB, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Crash
-	{ KW_RM_FLASH, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Flash
+	{ KW_RM_FLASH, KW_TIME, KW_NONE, KW_NONE, KW_NONE }, // Flash
 	
 	//MM3
 	{ KW_TARGETER, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Magnet
@@ -252,7 +234,7 @@ int ingredients[MAX_ALL_WEAPONS][5] = {
 	{ KW_NATURE, KW_CUTTER, KW_NONE, KW_NONE, KW_NONE }, // Tomahawk
 	{ KW_CRAWLER, KW_WIND, KW_NONE, KW_NONE, KW_NONE }, // Wind
 	{ KW_BOOMERANG, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Knight
-	{ KW_LIGHT, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Centaur
+	{ KW_LIGHT, KW_TIME, KW_NONE, KW_NONE, KW_NONE }, // Centaur
 
 	//MM7
 	{ KW_ICE, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Freeze
@@ -317,10 +299,11 @@ int ingredients[MAX_ALL_WEAPONS][5] = {
 	{ KW_LIGHT, KW_TARGETER, KW_NONE, KW_NONE, KW_NONE }, // Terra
 
 	//MMK
-	{ KW_MELEE, KW_MOBILITY, KW_EARTH, KW_NONE, KW_NONE }, // Quint
+	{ KW_MELEE, KW_MOBILITY, KW_EARTH, KW_TIME, KW_NONE }, // Quint
 	{ KW_BOMB, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Ballade
 	{ KW_CUTTER, KW_RAPID_FIRE, KW_NONE, KW_NONE, KW_NONE }, // Punk // +BOUNCY?
 	{ KW_SHIELD, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Enker :: CHARGEABLE
+	
 	
 	
 	// 2D
@@ -341,7 +324,9 @@ int ingredients[MAX_ALL_WEAPONS][5] = {
 	{ KW_RAPID_FIRE, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Yoga Inferno
 	{ KW_NONE, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Glue Shot
 	{ KW_TARGETER, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Super Arrow
-	{ KW_NONE, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Ground Dash // NEEDS VERIFICATION !!
+	{ KW_NONE, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Ground Dash 
+	{ KW_CUTTER, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Hellfire Cutter
+	{ KW_NONE, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Time Bomb // NEEDS VERIFICATION !!
 	
 	// 3D
 	// To add : SHIELD, MELEE, CUTTER
@@ -355,10 +340,6 @@ int ingredients[MAX_ALL_WEAPONS][5] = {
 	{ KW_METGUARD3, KW_SHIELD, KW_NONE, KW_NONE, KW_NONE }, // Met Guard 3
 	{ KW_THOUSANDSPEAR3, KW_MELEE, KW_NONE, KW_NONE, KW_NONE }, // Thousand Spear V3
 	{ KW_NONE, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Thousand Knives
-	
-	// 5D
-	//{ KW_NONE, KW_TGPD, KW_TGPD },
-	// MetGuard 3 EX, Thousand Spear V5
 
 	
 };
