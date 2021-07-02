@@ -14,6 +14,7 @@
 
 //                    #2.1 Keyword List						//
 
+
 #define KW_NONE -1 // means "no keyword/unused in this slot"
 #define KW_NULL 0 // a "placeholder" keyword category mostly for debug
 
@@ -68,7 +69,6 @@
 #define KW_THOUSANDSPEAR1 153
 #define KW_THOUSANDSPEAR2 154
 #define KW_THOUSANDSPEAR3 155
-
 
 
 
@@ -177,7 +177,7 @@ int recipes[MAX_5D][2] =
 
 // JUST PARSE THE XOVER CODE HERE!!!!!
 int ingredients[MAX_ALL_WEAPONS][5] = {  
-	{ KW_EARTH, KW_PHYSICAL, KW_NONE, KW_NONE, KW_NONE }, // Guts
+		{ KW_EARTH, KW_PHYSICAL, KW_NONE, KW_NONE, KW_NONE }, // Guts
 	{ KW_BOMB, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Bomb
 	{ KW_ICE, KW_RAPID_FIRE, KW_NONE, KW_NONE, KW_NONE }, // Ice
 	{ KW_ELEC, KW_SPREAD, KW_NONE, KW_NONE, KW_NONE},  // Elec
@@ -305,7 +305,6 @@ int ingredients[MAX_ALL_WEAPONS][5] = {
 	{ KW_SHIELD, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Enker :: CHARGEABLE
 	
 	
-	
 	// 2D
 	// To add : SHIELD, MELEE, CUTTER, BOUNCY, TARGETER, RAPID_FIRE, ICE
 	{ KW_METGUARD1, KW_SHIELD, KW_NONE, KW_NONE, KW_NONE }, // Met Guard 1
@@ -326,7 +325,7 @@ int ingredients[MAX_ALL_WEAPONS][5] = {
 	{ KW_TARGETER, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Super Arrow
 	{ KW_NONE, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Ground Dash 
 	{ KW_CUTTER, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Hellfire Cutter
-	{ KW_NONE, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Time Bomb // NEEDS VERIFICATION !!
+	{ KW_TARGETER, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Time Bomb
 	
 	// 3D
 	// To add : SHIELD, MELEE, CUTTER
@@ -340,6 +339,11 @@ int ingredients[MAX_ALL_WEAPONS][5] = {
 	{ KW_METGUARD3, KW_SHIELD, KW_NONE, KW_NONE, KW_NONE }, // Met Guard 3
 	{ KW_THOUSANDSPEAR3, KW_MELEE, KW_NONE, KW_NONE, KW_NONE }, // Thousand Spear V3
 	{ KW_NONE, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Thousand Knives
+	
+	// 5D
+	//{ KW_NONE, KW_TGPD, KW_TGPD },
+	// MetGuard 3 EX, Thousand Spear V5
+
 
 	
 };
