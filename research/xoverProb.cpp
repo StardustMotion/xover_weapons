@@ -5,7 +5,7 @@
 #include <iostream>
 #include <random>
 #define MAX_WEAPONS (103-1) // go away ra thor
-#define MAX_2D 19			// "number of 2D weapons"
+#define MAX_2D 20			// "number of 2D weapons"
 #define MAX_3D MAX_2D+4		// "of 3D weapons"
 #define MAX_4D MAX_3D+3 		// etc
 #define MAX_5D MAX_4D+2
@@ -123,7 +123,7 @@ std::string wepRadicals[MAX_ALL_WEAPONS] = {
 	"RecycleInhaler", "ForestWhip", "BlastMissile", "ThousandSpear",
 	"WhiteRoseCluster", "LeafBoomerang", "TriadThunder", "SonicSlicer",
 	"ScatterRing", "YogaInferno", "GlueShot", "SuperArrow",
-	"GroundDash", "HellfireCutter", "TimeBomb",
+	"GroundDash", "HellfireCutter", "TimeBomb", "WingSpiral"
 	
 	// 3D
 	"MetGuard2", "ThousandSpearV2", "CountershadingTracer", "IceGatling",
@@ -157,6 +157,7 @@ int recipes[MAX_5D][2] =
 	{ KW_EARTH, KW_PHYSICAL },	// Ground Dash
 	{ KW_RM_CUT, KW_FIRE },	// Hellfire Cutter
 	{ KW_TIME, KW_BOMB },	// Time Bomb
+	{ KW_WIND, KW_MOBILITY },	// Wing Spiral
 	
 	// 3D
 	{ KW_METGUARD1, KW_SHIELD },	// Met Guard 2
@@ -177,7 +178,7 @@ int recipes[MAX_5D][2] =
 
 // JUST PARSE THE XOVER CODE HERE!!!!!
 int ingredients[MAX_ALL_WEAPONS][5] = {  
-		{ KW_EARTH, KW_PHYSICAL, KW_NONE, KW_NONE, KW_NONE }, // Guts
+	{ KW_EARTH, KW_PHYSICAL, KW_NONE, KW_NONE, KW_NONE }, // Guts
 	{ KW_BOMB, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Bomb
 	{ KW_ICE, KW_RAPID_FIRE, KW_NONE, KW_NONE, KW_NONE }, // Ice
 	{ KW_ELEC, KW_SPREAD, KW_NONE, KW_NONE, KW_NONE},  // Elec
@@ -326,6 +327,7 @@ int ingredients[MAX_ALL_WEAPONS][5] = {
 	{ KW_NONE, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Ground Dash 
 	{ KW_CUTTER, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Hellfire Cutter
 	{ KW_TARGETER, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Time Bomb
+	{ KW_NONE, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Wing Spiral /!\ need verif /!\
 	
 	// 3D
 	// To add : SHIELD, MELEE, CUTTER
