@@ -5,7 +5,7 @@
 #include <iostream>
 #include <random>
 #define MAX_WEAPONS (103-1) // go away ra thor
-#define MAX_2D 20			// "number of 2D weapons"
+#define MAX_2D 21			// "number of 2D weapons"
 #define MAX_3D MAX_2D+4		// "of 3D weapons"
 #define MAX_4D MAX_3D+3 		// etc
 #define MAX_5D MAX_4D+2
@@ -47,6 +47,8 @@
 #define KW_SPREAD 37
 #define KW_MOBILITY 38
 #define KW_RAPID_FIRE 39
+#define KW_HEALER 40
+#define KW_STATUS 41
 
 // Game
 #define KW_GAME_5 85 
@@ -123,7 +125,8 @@ std::string wepRadicals[MAX_ALL_WEAPONS] = {
 	"RecycleInhaler", "ForestWhip", "BlastMissile", "ThousandSpear",
 	"WhiteRoseCluster", "LeafBoomerang", "TriadThunder", "SonicSlicer",
 	"ScatterRing", "YogaInferno", "GlueShot", "SuperArrow",
-	"GroundDash", "HellfireCutter", "TimeBomb", "WingSpiral"
+	"GroundDash", "HellfireCutter", "TimeBomb", "WingSpiral",
+	"VirusOutbreak",
 	
 	// 3D
 	"MetGuard2", "ThousandSpearV2", "CountershadingTracer", "IceGatling",
@@ -158,6 +161,7 @@ int recipes[MAX_5D][2] =
 	{ KW_RM_CUT, KW_FIRE },	// Hellfire Cutter
 	{ KW_TIME, KW_BOMB },	// Time Bomb
 	{ KW_WIND, KW_MOBILITY },	// Wing Spiral
+	{ KW_HEALER, KW_STATUS },	// Virus Outbreak
 	
 	// 3D
 	{ KW_METGUARD1, KW_SHIELD },	// Met Guard 2
@@ -176,15 +180,23 @@ int recipes[MAX_5D][2] =
 };
 
 
-// JUST PARSE THE XOVER CODE HERE!!!!!
-int ingredients[MAX_ALL_WEAPONS][5] = {  
+			////////////////////////		////////////////////////	
+//////////////////////     //////////////////////     ////////////////////////
+			////////////////////////		////////////////////////	
+//////////////////////     //////////////////////     ////////////////////////
+			////////////////////////		////////////////////////	
+				//			 #2.2 Weapon keywords                     //
+// links a weapon to its keywords. 
+// Any weapon not in this structure is considered as "non-fusion material".
+// /!\ 5D weapons don't have keywords !!
+int ingredients[MAX_WEAPONS + MAX_4D][5] = {// MM1
 	{ KW_EARTH, KW_PHYSICAL, KW_NONE, KW_NONE, KW_NONE }, // Guts
 	{ KW_BOMB, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Bomb
 	{ KW_ICE, KW_RAPID_FIRE, KW_NONE, KW_NONE, KW_NONE }, // Ice
 	{ KW_ELEC, KW_SPREAD, KW_NONE, KW_NONE, KW_NONE},  // Elec
 	{ KW_FIRE, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Fire
 	{ KW_CUTTER, KW_BOOMERANG, KW_RM_CUT, KW_NONE, KW_NONE }, // Cut
-	{ KW_TIME, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Time
+	{ KW_TIME, KW_STATUS, KW_NONE, KW_NONE, KW_NONE }, // Time
 	{ KW_MELEE, KW_MOBILITY, KW_PHYSICAL, KW_SOLIDIFIER, KW_NONE }, // Oil // -SOLIDIFEIR ?
 	
 	//MM2
@@ -195,7 +207,7 @@ int ingredients[MAX_ALL_WEAPONS][5] = {
 	{ KW_WIND, KW_SPREAD, KW_NONE, KW_NONE, KW_NONE }, // Air
 	{ KW_RM_QUICK, KW_BOOMERANG, KW_CUTTER, KW_RAPID_FIRE, KW_NONE }, // Quick
 	{ KW_BOMB, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Crash
-	{ KW_RM_FLASH, KW_TIME, KW_NONE, KW_NONE, KW_NONE }, // Flash
+	{ KW_RM_FLASH, KW_TIME, KW_STATUS, KW_NONE, KW_NONE }, // Flash
 	
 	//MM3
 	{ KW_TARGETER, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Magnet
@@ -205,7 +217,7 @@ int ingredients[MAX_ALL_WEAPONS][5] = {
 	{ KW_LIGHT, KW_BOUNCY, KW_NONE, KW_NONE, KW_NONE }, // Gemini
 	{ KW_CRAWLER, KW_NATURE, KW_NONE, KW_NONE, KW_NONE }, // Snake
 	{ KW_PHYSICAL, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Hard
-	{ KW_ELEC, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Spark
+	{ KW_ELEC, KW_STATUS, KW_NONE, KW_NONE, KW_NONE }, // Spark
 
 	//MM4
 	{ KW_BOMB, KW_EARTH, KW_NONE, KW_NONE, KW_NONE }, // Drill
@@ -215,7 +227,7 @@ int ingredients[MAX_ALL_WEAPONS][5] = {
 	{ KW_SHIELD, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Skull
 	{ KW_TARGETER, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Dive
 	{ KW_WATER, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Toad
-	{ KW_LIGHT, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Bright
+	{ KW_LIGHT, KW_STATUS, KW_NONE, KW_NONE, KW_NONE }, // Bright
 
 	//MM5
 	{ KW_BOMB, KW_GAME_5, KW_NONE, KW_NONE, KW_NONE }, // Napalm
@@ -231,7 +243,7 @@ int ingredients[MAX_ALL_WEAPONS][5] = {
 	{ KW_ICE, KW_SPREAD, KW_NONE, KW_NONE, KW_NONE }, // Blizzard
 	{ KW_FIRE, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Flame
 	{ KW_RM_YAMATO, KW_CUTTER, KW_RAPID_FIRE, KW_NONE, KW_NONE }, // Yamato
-	{ KW_SHIELD, KW_NATURE, KW_NONE, KW_NONE, KW_NONE }, // Plant
+	{ KW_SHIELD, KW_NATURE, KW_HEALER, KW_NONE, KW_NONE }, // Plant
 	{ KW_NATURE, KW_CUTTER, KW_NONE, KW_NONE, KW_NONE }, // Tomahawk
 	{ KW_CRAWLER, KW_WIND, KW_NONE, KW_NONE, KW_NONE }, // Wind
 	{ KW_BOOMERANG, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Knight
@@ -243,12 +255,12 @@ int ingredients[MAX_ALL_WEAPONS][5] = {
 	{ KW_CHARGEABLE, KW_BOUNCY, KW_SPREAD, KW_NONE, KW_NONE }, // Spring
 	{ KW_BOMB, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Burst
 	{ KW_CRAWLER, KW_FIRE, KW_SHIELD, KW_MOBILITY, KW_NONE }, // Turbo
-	{ KW_SHIELD, KW_SPREAD, KW_NONE, KW_NONE, KW_NONE }, // Junk
+	{ KW_SHIELD, KW_SPREAD, KW_CHARGEABLE, KW_NONE, KW_NONE }, // Junk
 	{ KW_MELEE, KW_PHYSICAL, KW_NONE, KW_NONE, KW_NONE }, // Slash // KW_NATURE // KW_CUTTER
 	{ KW_ELEC, KW_LIGHT, KW_NONE, KW_NONE, KW_NONE }, // Cloud
 
 	// MM8
-	{ KW_EARTH, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Astro
+	{ KW_EARTH, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Astro8
 	{ KW_FIRE, KW_MELEE, KW_NONE, KW_NONE, KW_NONE }, // Sword // KW_CUTTER ? XW_TRADITIONNAL
 	{ KW_ELEC, KW_MELEE, KW_MOBILITY, KW_NONE, KW_NONE }, // Clown // KW_PHYSICAL ?
 	{ KW_TARGETER, KW_CHARGEABLE, KW_NONE, KW_NONE, KW_NONE }, // Search
@@ -256,15 +268,15 @@ int ingredients[MAX_ALL_WEAPONS][5] = {
 	{ KW_BOUNCY, KW_MOBILITY, KW_NONE, KW_NONE, KW_NONE }, // MegaBall 
 	{ KW_LIGHT, KW_BOMB, KW_NONE, KW_NONE, KW_NONE }, // Grenade
 	{ KW_CRAWLER, KW_ICE, KW_NONE, KW_NONE, KW_NONE }, // Frost
-	{ KW_WIND, KW_MOBILITY, KW_NONE, KW_NONE, KW_NONE }, // Tengu
+	{ KW_WIND, KW_MOBILITY, KW_NONE, KW_NONE, KW_NONE }, // Tengu8
 
 	//MMB
-	{ KW_WIND, KW_CUTTER, KW_MELEE, KW_BOUNCY, KW_NONE  }, // TenguB // CHARGEABLE // KW_MOBILITY
+	{ KW_WIND, KW_CUTTER, KW_MELEE, KW_BOUNCY, KW_MOBILITY  }, // TenguB // CHARGEABLE // KW_MOBILITY
 	{ KW_FIRE, KW_RAPID_FIRE, KW_NONE, KW_NONE, KW_NONE }, // Burner
 	{ KW_SPREAD, KW_EARTH, KW_NONE, KW_NONE, KW_NONE }, // Ground
 	{ KW_BOOMERANG, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Magic
 	{ KW_TARGETER, KW_BOMB, KW_NONE, KW_NONE, KW_NONE }, // Pirate
-	{ KW_TARGETER, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Astro // KW_LIGHT ?
+	{ KW_TARGETER, KW_LIGHT, KW_NONE, KW_NONE, KW_NONE }, // AstroB
 	{ KW_SHIELD, KW_CRAWLER, KW_ICE, KW_BOUNCY, KW_NONE }, // Cold
 	{ KW_LIGHT, KW_ELEC, KW_NONE, KW_NONE, KW_NONE }, // Dynamo
 
@@ -273,23 +285,23 @@ int ingredients[MAX_ALL_WEAPONS][5] = {
 	{ KW_LIGHT, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Splash
 	{ KW_TARGETER, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Galaxy :: BOMB
 	{ KW_SHIELD, KW_EARTH, KW_NONE, KW_NONE, KW_NONE }, // Jewel
-	{ KW_SOLIDIFIER, KW_EARTH, KW_NONE, KW_NONE, KW_NONE }, // Concrete
+	{ KW_SOLIDIFIER, KW_EARTH, KW_STATUS, KW_NONE, KW_NONE }, // Concrete
 	{ KW_WIND, KW_MOBILITY, KW_NONE, KW_NONE, KW_NONE }, // Tornado
 	{ KW_TARGETER, KW_NATURE, KW_NONE, KW_NONE, KW_NONE }, // Hornet
 	{ KW_FIRE, KW_CHARGEABLE, KW_SPREAD, KW_NONE, KW_NONE }, // Magma
 
 	//MM10
 	{ KW_FIRE, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Solar
-	{ KW_CUTTER, KW_CRAWLER, KW_MOBILITY, KW_NONE, KW_NONE }, // Nitro
+	{ KW_CUTTER, KW_MOBILITY, KW_CRAWLER, KW_NONE, KW_NONE }, // Nitro
 	{ KW_BOUNCY, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Strike
 	{ KW_ELEC, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Sheep
 	{ KW_BOMB, KW_TARGETER, KW_NONE, KW_NONE, KW_NONE }, // Commando
-	{ KW_ICE, KW_SOLIDIFIER, KW_NONE, KW_NONE, KW_NONE }, // Chill
+	{ KW_ICE, KW_SOLIDIFIER, KW_STATUS, KW_NONE, KW_NONE }, // Chill
 	{ KW_SHIELD, KW_WATER, KW_NONE, KW_NONE, KW_NONE }, // Pump
 	{ KW_CUTTER, KW_SPREAD, KW_RAPID_FIRE, KW_NONE, KW_NONE }, // Blade
 	
 	//MMV
-	{ KW_NONE, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Mercury // WATer ?
+	{ KW_HEALER, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Mercury // WATer ?
 	{ KW_WATER, KW_BOMB, KW_NONE, KW_NONE, KW_NONE }, // Venus
 	{ KW_BOMB, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Mars
 	{ KW_WATER, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Neptune // KW_SPREAD
@@ -327,7 +339,8 @@ int ingredients[MAX_ALL_WEAPONS][5] = {
 	{ KW_NONE, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Ground Dash 
 	{ KW_CUTTER, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Hellfire Cutter
 	{ KW_TARGETER, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Time Bomb
-	{ KW_NONE, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Wing Spiral /!\ need verif /!\
+	{ KW_BOUNCY, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Wing Spiral
+	{ KW_SHIELD, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Virus Outbreak
 	
 	// 3D
 	// To add : SHIELD, MELEE, CUTTER
@@ -346,8 +359,6 @@ int ingredients[MAX_ALL_WEAPONS][5] = {
 	//{ KW_NONE, KW_TGPD, KW_TGPD },
 	// MetGuard 3 EX, Thousand Spear V5
 
-
-	
 };
 // DONT FORGET TO REMOVE RA THOR
 
