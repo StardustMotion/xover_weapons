@@ -5,15 +5,23 @@
 #include <iostream>
 #include <random>
 #define MAX_WEAPONS (103-1) // go away ra thor
-#define MAX_2D 21			// "number of 2D weapons"
+#define MAX_2D 22			// "number of 2D weapons"
 #define MAX_3D MAX_2D+4		// "of 3D weapons"
 #define MAX_4D MAX_3D+3 		// etc
 #define MAX_5D MAX_4D+2
 #define MAX_ALL_WEAPONS MAX_WEAPONS+MAX_5D   // fusions + vailla
 
+int overlaps = 0;
 
+
+
+
+			////////////////////////		////////////////////////	
+//////////////////////     //////////////////////     ////////////////////////
+			////////////////////////		////////////////////////	
+//////////////////////     //////////////////////     ////////////////////////
+			////////////////////////		////////////////////////	
 //                    #2.1 Keyword List						//
-
 
 #define KW_NONE -1 // means "no keyword/unused in this slot"
 #define KW_NULL 0 // a "placeholder" keyword category mostly for debug
@@ -47,8 +55,9 @@
 #define KW_SPREAD 37
 #define KW_MOBILITY 38
 #define KW_RAPID_FIRE 39
-#define KW_HEALER 40
+#define KW_PROTECTOR 40
 #define KW_STATUS 41
+#define KW_AOE 42
 
 // Game
 #define KW_GAME_5 85 
@@ -126,7 +135,7 @@ std::string wepRadicals[MAX_ALL_WEAPONS] = {
 	"WhiteRoseCluster", "LeafBoomerang", "TriadThunder", "SonicSlicer",
 	"ScatterRing", "YogaInferno", "GlueShot", "SuperArrow",
 	"GroundDash", "HellfireCutter", "TimeBomb", "WingSpiral",
-	"VirusOutbreak",
+	"VirusOutbreak", "PhotonFlare",
 	
 	// 3D
 	"MetGuard2", "ThousandSpearV2", "CountershadingTracer", "IceGatling",
@@ -161,7 +170,8 @@ int recipes[MAX_5D][2] =
 	{ KW_RM_CUT, KW_FIRE },	// Hellfire Cutter
 	{ KW_TIME, KW_BOMB },	// Time Bomb
 	{ KW_WIND, KW_MOBILITY },	// Wing Spiral
-	{ KW_HEALER, KW_STATUS },	// Virus Outbreak
+	{ KW_PROTECTOR, KW_STATUS },	// Virus Outbreak
+	{ KW_LIGHT, KW_AOE },	// Photon Flare
 	
 	// 3D
 	{ KW_METGUARD1, KW_SHIELD },	// Met Guard 2
@@ -189,25 +199,26 @@ int recipes[MAX_5D][2] =
 // links a weapon to its keywords. 
 // Any weapon not in this structure is considered as "non-fusion material".
 // /!\ 5D weapons don't have keywords !!
-int ingredients[MAX_WEAPONS + MAX_4D][5] = {// MM1
+int ingredients[MAX_WEAPONS + MAX_4D][5] = {
+	// MM1
 	{ KW_EARTH, KW_PHYSICAL, KW_NONE, KW_NONE, KW_NONE }, // Guts
 	{ KW_BOMB, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Bomb
 	{ KW_ICE, KW_RAPID_FIRE, KW_NONE, KW_NONE, KW_NONE }, // Ice
 	{ KW_ELEC, KW_SPREAD, KW_NONE, KW_NONE, KW_NONE},  // Elec
 	{ KW_FIRE, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Fire
 	{ KW_CUTTER, KW_BOOMERANG, KW_RM_CUT, KW_NONE, KW_NONE }, // Cut
-	{ KW_TIME, KW_STATUS, KW_NONE, KW_NONE, KW_NONE }, // Time
+	{ KW_TIME, KW_STATUS, KW_AOE, KW_NONE, KW_NONE }, // Time
 	{ KW_MELEE, KW_MOBILITY, KW_PHYSICAL, KW_SOLIDIFIER, KW_NONE }, // Oil // -SOLIDIFEIR ?
 	
 	//MM2
 	{ KW_CRAWLER, KW_WATER, KW_NONE, KW_NONE, KW_NONE }, // Bubble
 	{ KW_CUTTER, KW_RAPID_FIRE, KW_NONE, KW_NONE, KW_NONE }, // Metal
 	{ KW_FIRE, KW_CHARGEABLE, KW_NONE, KW_NONE, KW_NONE }, // Heat
-	{ KW_SHIELD, KW_NATURE, KW_NONE, KW_NONE, KW_NONE }, // Wood
+	{ KW_SHIELD, KW_NATURE, KW_PROTECTOR, KW_NONE, KW_NONE }, // Wood
 	{ KW_WIND, KW_SPREAD, KW_NONE, KW_NONE, KW_NONE }, // Air
 	{ KW_RM_QUICK, KW_BOOMERANG, KW_CUTTER, KW_RAPID_FIRE, KW_NONE }, // Quick
 	{ KW_BOMB, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Crash
-	{ KW_RM_FLASH, KW_TIME, KW_STATUS, KW_NONE, KW_NONE }, // Flash
+	{ KW_RM_FLASH, KW_TIME, KW_STATUS, KW_AOE, KW_NONE }, // Flash
 	
 	//MM3
 	{ KW_TARGETER, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Magnet
@@ -224,10 +235,10 @@ int ingredients[MAX_WEAPONS + MAX_4D][5] = {// MM1
 	{ KW_BOOMERANG, KW_CUTTER, KW_RM_RING, KW_NONE, KW_NONE }, // Ring
 	{ KW_RM_DUST, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Dust
 	{ KW_FIRE, KW_CHARGEABLE, KW_NONE, KW_NONE, KW_NONE }, /// Pharaoh
-	{ KW_SHIELD, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Skull
+	{ KW_SHIELD, KW_PROTECTOR, KW_NONE, KW_NONE, KW_NONE }, // Skull
 	{ KW_TARGETER, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Dive
-	{ KW_WATER, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Toad
-	{ KW_LIGHT, KW_STATUS, KW_NONE, KW_NONE, KW_NONE }, // Bright
+	{ KW_WATER, KW_AOE, KW_NONE, KW_NONE, KW_NONE }, // Toad
+	{ KW_LIGHT, KW_STATUS, KW_AOE, KW_NONE, KW_NONE }, // Bright
 
 	//MM5
 	{ KW_BOMB, KW_GAME_5, KW_NONE, KW_NONE, KW_NONE }, // Napalm
@@ -237,17 +248,17 @@ int ingredients[MAX_WEAPONS + MAX_4D][5] = {// MM1
 	{ KW_CRAWLER, KW_WATER, KW_GAME_5, KW_RAPID_FIRE, KW_NONE }, // Wave
 	{ KW_BOUNCY, KW_GAME_5, KW_EARTH, KW_NONE, KW_NONE }, // Crystal
 	{ KW_SHIELD, KW_GAME_5, KW_NONE, KW_NONE, KW_NONE }, // Star
-	{ KW_GAME_5, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Gravity
+	{ KW_GAME_5, KW_AOE, KW_NONE, KW_NONE, KW_NONE }, // Gravity
 
 	//MM6
 	{ KW_ICE, KW_SPREAD, KW_NONE, KW_NONE, KW_NONE }, // Blizzard
 	{ KW_FIRE, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Flame
 	{ KW_RM_YAMATO, KW_CUTTER, KW_RAPID_FIRE, KW_NONE, KW_NONE }, // Yamato
-	{ KW_SHIELD, KW_NATURE, KW_HEALER, KW_NONE, KW_NONE }, // Plant
+	{ KW_SHIELD, KW_NATURE, KW_PROTECTOR, KW_NONE, KW_NONE }, // Plant
 	{ KW_NATURE, KW_CUTTER, KW_NONE, KW_NONE, KW_NONE }, // Tomahawk
 	{ KW_CRAWLER, KW_WIND, KW_NONE, KW_NONE, KW_NONE }, // Wind
 	{ KW_BOOMERANG, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Knight
-	{ KW_LIGHT, KW_TIME, KW_NONE, KW_NONE, KW_NONE }, // Centaur
+	{ KW_LIGHT, KW_TIME, KW_AOE, KW_NONE, KW_NONE }, // Centaur
 
 	//MM7
 	{ KW_ICE, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Freeze
@@ -255,14 +266,14 @@ int ingredients[MAX_WEAPONS + MAX_4D][5] = {// MM1
 	{ KW_CHARGEABLE, KW_BOUNCY, KW_SPREAD, KW_NONE, KW_NONE }, // Spring
 	{ KW_BOMB, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Burst
 	{ KW_CRAWLER, KW_FIRE, KW_SHIELD, KW_MOBILITY, KW_NONE }, // Turbo
-	{ KW_SHIELD, KW_SPREAD, KW_CHARGEABLE, KW_NONE, KW_NONE }, // Junk
+	{ KW_SHIELD, KW_SPREAD, KW_CHARGEABLE, KW_NONE, KW_NONE }, // Junk // KW_PROTECTOR
 	{ KW_MELEE, KW_PHYSICAL, KW_NONE, KW_NONE, KW_NONE }, // Slash // KW_NATURE // KW_CUTTER
 	{ KW_ELEC, KW_LIGHT, KW_NONE, KW_NONE, KW_NONE }, // Cloud
 
 	// MM8
-	{ KW_EARTH, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Astro8
+	{ KW_EARTH, KW_AOE, KW_NONE, KW_NONE, KW_NONE }, // Astro8
 	{ KW_FIRE, KW_MELEE, KW_NONE, KW_NONE, KW_NONE }, // Sword // KW_CUTTER ? XW_TRADITIONNAL
-	{ KW_ELEC, KW_MELEE, KW_MOBILITY, KW_NONE, KW_NONE }, // Clown // KW_PHYSICAL ?
+	{ KW_ELEC, KW_MELEE, KW_MOBILITY, KW_NONE, KW_NONE }, // Clown // KW_PHYSICAL ? minus KW_MOBILITY ?
 	{ KW_TARGETER, KW_CHARGEABLE, KW_NONE, KW_NONE, KW_NONE }, // Search
 	{ KW_WATER, KW_RAPID_FIRE, KW_NONE, KW_NONE, KW_NONE }, // Aqua
 	{ KW_BOUNCY, KW_MOBILITY, KW_NONE, KW_NONE, KW_NONE }, // MegaBall 
@@ -277,16 +288,16 @@ int ingredients[MAX_WEAPONS + MAX_4D][5] = {// MM1
 	{ KW_BOOMERANG, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Magic
 	{ KW_TARGETER, KW_BOMB, KW_NONE, KW_NONE, KW_NONE }, // Pirate
 	{ KW_TARGETER, KW_LIGHT, KW_NONE, KW_NONE, KW_NONE }, // AstroB
-	{ KW_SHIELD, KW_CRAWLER, KW_ICE, KW_BOUNCY, KW_NONE }, // Cold
-	{ KW_LIGHT, KW_ELEC, KW_NONE, KW_NONE, KW_NONE }, // Dynamo
+	{ KW_SHIELD, KW_CRAWLER, KW_ICE, KW_BOUNCY, KW_NONE }, // Cold // KW_PROTECTOR
+	{ KW_LIGHT, KW_ELEC, KW_AOE, KW_NONE, KW_NONE }, // Dynamo
 
 	// MM9
 	{ KW_CRAWLER, KW_ELEC, KW_BOUNCY, KW_RAPID_FIRE, KW_NONE }, // Plug
 	{ KW_LIGHT, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Splash
-	{ KW_TARGETER, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Galaxy :: BOMB
+	{ KW_TARGETER, KW_AOE, KW_NONE, KW_NONE, KW_NONE }, // Galaxy :: BOMB
 	{ KW_SHIELD, KW_EARTH, KW_NONE, KW_NONE, KW_NONE }, // Jewel
 	{ KW_SOLIDIFIER, KW_EARTH, KW_STATUS, KW_NONE, KW_NONE }, // Concrete
-	{ KW_WIND, KW_MOBILITY, KW_NONE, KW_NONE, KW_NONE }, // Tornado
+	{ KW_WIND, KW_MOBILITY, KW_AOE, KW_NONE, KW_NONE }, // Tornado
 	{ KW_TARGETER, KW_NATURE, KW_NONE, KW_NONE, KW_NONE }, // Hornet
 	{ KW_FIRE, KW_CHARGEABLE, KW_SPREAD, KW_NONE, KW_NONE }, // Magma
 
@@ -297,26 +308,27 @@ int ingredients[MAX_WEAPONS + MAX_4D][5] = {// MM1
 	{ KW_ELEC, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Sheep
 	{ KW_BOMB, KW_TARGETER, KW_NONE, KW_NONE, KW_NONE }, // Commando
 	{ KW_ICE, KW_SOLIDIFIER, KW_STATUS, KW_NONE, KW_NONE }, // Chill
-	{ KW_SHIELD, KW_WATER, KW_NONE, KW_NONE, KW_NONE }, // Pump
+	{ KW_SHIELD, KW_WATER, KW_PROTECTOR, KW_NONE, KW_NONE }, // Pump
 	{ KW_CUTTER, KW_SPREAD, KW_RAPID_FIRE, KW_NONE, KW_NONE }, // Blade
 	
 	//MMV
-	{ KW_HEALER, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Mercury // WATer ?
+	{ KW_PROTECTOR, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Mercury
 	{ KW_WATER, KW_BOMB, KW_NONE, KW_NONE, KW_NONE }, // Venus
 	{ KW_BOMB, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Mars
 	{ KW_WATER, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Neptune // KW_SPREAD
 	{ KW_ELEC, KW_MELEE, KW_NONE, KW_NONE, KW_NONE }, // Jupiter
-	{ KW_SHIELD, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Saturn
+	{ KW_SHIELD, KW_PROTECTOR, KW_NONE, KW_NONE, KW_NONE }, // Saturn
 	{ KW_EARTH, KW_PHYSICAL, KW_NONE, KW_NONE, KW_NONE }, // Uranus
 	{ KW_CHARGEABLE, KW_MELEE, KW_MOBILITY, KW_PHYSICAL, KW_NONE }, // Pluto
 	{ KW_LIGHT, KW_TARGETER, KW_NONE, KW_NONE, KW_NONE }, // Terra
 
 	//MMK
-	{ KW_MELEE, KW_MOBILITY, KW_EARTH, KW_TIME, KW_NONE }, // Quint
+	{ KW_MELEE, KW_MOBILITY, KW_TIME, KW_NONE, KW_NONE }, // Quint
 	{ KW_BOMB, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Ballade
 	{ KW_CUTTER, KW_RAPID_FIRE, KW_NONE, KW_NONE, KW_NONE }, // Punk // +BOUNCY?
-	{ KW_SHIELD, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Enker :: CHARGEABLE
+	{ KW_SHIELD, KW_PROTECTOR, KW_NONE, KW_NONE, KW_NONE }, // Enker :: CHARGEABLE
 	
+	//{ KW_LIGHT, KW_CHARGEABLE, KW_CRAWLER, KW_SPREAD, KW_NONE }, // Ra Thor
 	
 	// 2D
 	// To add : SHIELD, MELEE, CUTTER, BOUNCY, TARGETER, RAPID_FIRE, ICE
@@ -341,6 +353,7 @@ int ingredients[MAX_WEAPONS + MAX_4D][5] = {// MM1
 	{ KW_TARGETER, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Time Bomb
 	{ KW_BOUNCY, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Wing Spiral
 	{ KW_SHIELD, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Virus Outbreak
+	{ KW_NONE, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Photon Flare
 	
 	// 3D
 	// To add : SHIELD, MELEE, CUTTER
@@ -358,37 +371,39 @@ int ingredients[MAX_WEAPONS + MAX_4D][5] = {// MM1
 	// 5D
 	//{ KW_NONE, KW_TGPD, KW_TGPD },
 	// MetGuard 3 EX, Thousand Spear V5
-
 };
 // DONT FORGET TO REMOVE RA THOR
 
-bool checkFusion(int kw1, int kw2, int tierOffsetLow, int tierOffsetHigh) {
+int checkFusion(int kw1, int kw2, int tierOffsetLow, int tierOffsetHigh) {
+	int fusions = 0;
 	//std::cout << "\nlooking from " << tierOffsetLow << " to " << tierOffsetHigh << "\n";
     for (int i = tierOffsetLow; i < tierOffsetHigh; i++) {
         if (((recipes[i][0] == kw1) && (recipes[i][1] == kw2)) || 
             ((recipes[i][0] == kw2) && (recipes[i][1] == kw1)) ) {
 				//std::cout << "\n\nmatch!!!!!!!!!\n" << kw1 << " and " << kw2 << "\n";
-				return true;
+				fusions++;
 			}
     }
-    return false;
+    return fusions;
 }
 
 bool isFusionDeep(int x, int y, int tierOffsetLow, int tierOffsetHigh) {
     //std::cout << "\nAre " << x << " (" << wepRadicals[x] << ") and " << y << " (" << wepRadicals[y] << ") fusions ?";
-    int kw1 = 0; int kw2;
+    int kw1 = 0; int kw2; int i=0;
     while ((ingredients[x][kw1] != KW_NONE) && kw1 < 5) {
         //std::cout << "\nFIRST element keyword " << kw1 << " = " << ingredients[x][kw1];
         kw2 = 0;
         while ((ingredients[y][kw2] != KW_NONE) && kw2 < 5) {
          //std::cout << "\nSECOND element keyword " << kw2 << " = " << ingredients[y][kw2];
-            if (checkFusion(ingredients[x][kw1], ingredients[y][kw2], tierOffsetLow, tierOffsetHigh))
-                return true;
+		 i += (checkFusion(ingredients[x][kw1], ingredients[y][kw2], tierOffsetLow, tierOffsetHigh));
             kw2++;
         }
         kw1++;
     }
-    return false;
+	if (i > 1) { overlaps += i-1;
+		//std::cout << x << " (" << wepRadicals[x] << ") and " << y << " (" << wepRadicals[y] << ") have  " << i-1 << " overlaps\n";
+		 }
+    return (i > 0);
 }
 
 bool isFusion(int x, int y) {
@@ -439,7 +454,8 @@ void compute(int tier) {
 			MAX_WEAPONS << "*" << tierOffsetHigh-tierOffsetLow << ") that is " << 
         ((double) count /(double) allCombination*100.0) << "%";
     std::cout << "\n--------------------------------------------------------------------------------------------\n";// << "trying in practice!! picking " << randomPicks << " combinations... with seed " << seed << "...";
-   
+    std::cout << "\nThere are " << overlaps << " overlaps.\n";
+
 	std::cout << "\nPrint the combinations? (1 = yes    0 = no)\n";
 	bool printCombination;
 
@@ -466,8 +482,9 @@ int main(int argc, char *argv[]) {
     // Checking if two weapons combine
     for (int x = 0; x < MAX_WEAPONS; x++) {
         for (int y = x+1; y < MAX_WEAPONS+MAX_4D; y++) {
-            if (isFusion(x,y))
+            if (isFusion(x,y)) {
                 compatibility[std::min(x,y)][std::max(x,y)] = true;
+			}
         }
     }
 
