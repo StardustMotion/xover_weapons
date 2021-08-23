@@ -5,8 +5,8 @@
 #include <iostream>
 #include <random>
 #define MAX_WEAPONS (103-1) // go away ra thor
-#define MAX_2D 22			// "number of 2D weapons"
-#define MAX_3D MAX_2D+4		// "of 3D weapons"
+#define MAX_2D 23			// "number of 2D weapons"
+#define MAX_3D MAX_2D+5		// "of 3D weapons"
 #define MAX_4D MAX_3D+3 		// etc
 #define MAX_5D MAX_4D+2
 #define MAX_ALL_WEAPONS MAX_WEAPONS+MAX_5D   // fusions + vailla
@@ -83,6 +83,8 @@ int overlaps = 0;
 
 
 
+
+
 // Initializing the table
 bool compatibility[MAX_WEAPONS][MAX_ALL_WEAPONS];
 
@@ -127,6 +129,8 @@ std::string wepRadicals[MAX_ALL_WEAPONS] = {
 		
 	"Sakugarne", "BalladeCracker", "ScrewCrusher", "MirrorBuster",
 	
+	//"DawnBreaker",
+	
 	// FUSIONS
 	
 	// 2D
@@ -135,10 +139,11 @@ std::string wepRadicals[MAX_ALL_WEAPONS] = {
 	"WhiteRoseCluster", "LeafBoomerang", "TriadThunder", "SonicSlicer",
 	"ScatterRing", "YogaInferno", "GlueShot", "SuperArrow",
 	"GroundDash", "HellfireCutter", "TimeBomb", "WingSpiral",
-	"VirusOutbreak", "PhotonFlare",
+	"VirusOutbreak", "PhotonFlare", "BrandishingBlade",
 	
 	// 3D
 	"MetGuard2", "ThousandSpearV2", "CountershadingTracer", "IceGatling",
+	"Red Hot Kick",
 	
 	// 4D
 	"MetGuard3", "ThousandSpearV3", "ThousandKnives",
@@ -150,6 +155,7 @@ std::string wepRadicals[MAX_ALL_WEAPONS] = {
 
 int recipes[MAX_5D][2] = 
 {
+	// 2D
 	{ KW_CRAWLER, KW_SHIELD },	// Met Guard 1
 	{ KW_CRAWLER, KW_FIRE },	// Melt Creeper
 	{ KW_TARGETER, KW_LIGHT },	// Aiming Laser
@@ -172,12 +178,14 @@ int recipes[MAX_5D][2] =
 	{ KW_WIND, KW_MOBILITY },	// Wing Spiral
 	{ KW_PROTECTOR, KW_STATUS },	// Virus Outbreak
 	{ KW_LIGHT, KW_AOE },	// Photon Flare
+	{ KW_CUTTER, KW_CHARGEABLE },	// Brandishing Blade
 	
 	// 3D
 	{ KW_METGUARD1, KW_SHIELD },	// Met Guard 2
 	{ KW_THOUSANDSPEAR1, KW_MELEE },	// Thousand Spear V2
 	{ KW_TARGETER, KW_BOUNCY },	// Countershading Tracer
 	{ KW_ICE, KW_RAPID_FIRE },	// Ice Gatling
+	{ KW_FIRE, KW_PHYSICAL },	// Red Hot Kick
 	
 	// 4D
 	{ KW_METGUARD2, KW_SHIELD },	// Met Guard 3
@@ -331,12 +339,14 @@ int ingredients[MAX_WEAPONS + MAX_4D][5] = {
 	//{ KW_LIGHT, KW_CHARGEABLE, KW_CRAWLER, KW_SPREAD, KW_NONE }, // Ra Thor
 	
 	// 2D
-	// To add : SHIELD, MELEE, CUTTER, BOUNCY, TARGETER, RAPID_FIRE, ICE
+	// To add : 
+	// SHIELD, MELEE, BOUNCY, TARGETER, RAPID_FIRE, ICE, FIRE, PHYSICAL
+	// CUTTER
 	{ KW_METGUARD1, KW_SHIELD, KW_NONE, KW_NONE, KW_NONE }, // Met Guard 1
-	{ KW_NONE, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Melt Creeper
+	{ KW_FIRE, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Melt Creeper
 	{ KW_TARGETER, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Aiming Laser
-	{ KW_RAPID_FIRE, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Delay Flame
-	{ KW_MELEE, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Recycle Inhaler
+	{ KW_RAPID_FIRE, KW_FIRE, KW_NONE, KW_NONE, KW_NONE }, // Delay Flame
+	{ KW_MELEE, KW_PHYSICAL, KW_NONE, KW_NONE, KW_NONE }, // Recycle Inhaler
 	{ KW_MELEE, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Forest Whip
 	{ KW_TARGETER, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Blast Missile
 	{ KW_THOUSANDSPEAR1, KW_MELEE, KW_CUTTER, KW_NONE, KW_NONE }, // Thousand Spear
@@ -345,15 +355,16 @@ int ingredients[MAX_WEAPONS + MAX_4D][5] = {
 	{ KW_SHIELD, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Triad Thunder
 	{ KW_CUTTER, KW_BOUNCY, KW_NONE, KW_NONE, KW_NONE }, // Sonic Slicer
 	{ KW_NONE, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Scatter Ring
-	{ KW_RAPID_FIRE, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Yoga Inferno
+	{ KW_RAPID_FIRE, KW_FIRE, KW_NONE, KW_NONE, KW_NONE }, // Yoga Inferno
 	{ KW_NONE, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Glue Shot
-	{ KW_TARGETER, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Super Arrow
-	{ KW_NONE, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Ground Dash 
-	{ KW_CUTTER, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Hellfire Cutter
+	{ KW_TARGETER, KW_PHYSICAL, KW_NONE, KW_NONE, KW_NONE }, // Super Arrow
+	{ KW_PHYSICAL, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Ground Dash 
+	{ KW_CUTTER, KW_FIRE, KW_NONE, KW_NONE, KW_NONE }, // Hellfire Cutter
 	{ KW_TARGETER, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Time Bomb
 	{ KW_BOUNCY, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Wing Spiral
 	{ KW_SHIELD, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Virus Outbreak
 	{ KW_NONE, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Photon Flare
+	{ KW_MELEE, KW_CUTTER, KW_RAPID_FIRE, KW_NONE, KW_NONE }, // Brandishing Blade
 	
 	// 3D
 	// To add : SHIELD, MELEE, CUTTER
@@ -361,6 +372,7 @@ int ingredients[MAX_WEAPONS + MAX_4D][5] = {
 	{ KW_THOUSANDSPEAR2, KW_MELEE, KW_CUTTER, KW_NONE, KW_NONE }, // Thousand Spear V2
 	{ KW_NONE, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Countershading Tracer
 	{ KW_NONE, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Ice Gatling
+	{ KW_MELEE, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Red Hot Kick
 	
 	// 4D
 	// To add : SHIELD, MELEE
@@ -380,7 +392,7 @@ int checkFusion(int kw1, int kw2, int tierOffsetLow, int tierOffsetHigh) {
     for (int i = tierOffsetLow; i < tierOffsetHigh; i++) {
         if (((recipes[i][0] == kw1) && (recipes[i][1] == kw2)) || 
             ((recipes[i][0] == kw2) && (recipes[i][1] == kw1)) ) {
-				//std::cout << "\n\nmatch!!!!!!!!!\n" << kw1 << " and " << kw2 << "\n";
+				std::cout << "\n>>> " << wepRadicals[MAX_WEAPONS+i];
 				fusions++;
 			}
     }
@@ -401,7 +413,7 @@ bool isFusionDeep(int x, int y, int tierOffsetLow, int tierOffsetHigh) {
         kw1++;
     }
 	if (i > 1) { overlaps += i-1;
-		//std::cout << x << " (" << wepRadicals[x] << ") and " << y << " (" << wepRadicals[y] << ") have  " << i-1 << " overlaps\n";
+		std::cout << "\n" << wepRadicals[x] << " and " << wepRadicals[y] << " have " << i-1 << " overlaps";
 		 }
     return (i > 0);
 }
