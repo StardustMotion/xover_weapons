@@ -9,7 +9,7 @@
 #define MAX_1D 103
 
 // This indicates the index at which the ND tier terminates 
-#define MAX_2D 23
+#define MAX_2D 24
 #define MAX_3D 5
 #define MAX_4D 3
 #define MAX_5D 2
@@ -76,7 +76,7 @@ std::string names[TOTAL_WEPS] = {
 	"White Rose Cluster", "Leaf Boomerang", "Triad Thunder", "Sonic Slicer",
 	"Scatter Ring", "Yoga Inferno", "Glue Shot", "Super Arrow",
 	"Ground Dash",	"Hellfire Cutter", "Time Bomb", "Wing Spiral",
-	"Virus Outbreak", "Photon Flare", "Brandishing Blade",
+	"Virus Outbreak", "Photon Flare", "Brandishing Blade",	"Doppler Attack",
 	
 	// 3D
 	"Met Guard 2", "Thousand Spear V2", "Countershading Tracer", "Ice Gatling",
@@ -102,12 +102,12 @@ std::vector<std::string> kwNames = {
 
     "LIGHT", "BOMB", "ICE", "TIME", "ELEC", "NATURE", "CUTTER",
 
-    "PHYSICAL", "SOLIDIFIER",
+    "PHYSICAL", "SOLIDIFIER", "SOUL",
 
     "BOOMERANG", "SHIELD", "CRAWLER", "TARGETER", "BOUNCY", "CHARGEABLE", "MELEE", "SPREAD",
     "MOBILITY", "RAPID-FIRE", "PROTECTOR", "STATUS", "AOE",
 
-    "MEGAMAN_5",
+    "MEGAMAN_5", "MEGAMAN_BASS",
 
     "RM_QUICK", "RM_DUST", "RM_RING", "RM_FLASH", "RM_YAMATO", "RM_CUT",
 
@@ -130,6 +130,7 @@ std::vector<std::string> kwNames = {
 
 #define KW_PHYSICAL 20
 #define KW_SOLIDIFIER 21 // SOLID_LIQUID ? hmmm....
+#define KW_SOUL 22
 
 // Behavior
 #define KW_BOOMERANG 30
@@ -147,7 +148,8 @@ std::vector<std::string> kwNames = {
 #define KW_AOE 42
 
 // Game
-#define KW_GAME_5 85 
+#define KW_GAME_5 85
+#define KW_GAME_BASS 86
 
 // ======> Singletons <====== //
 
@@ -183,7 +185,7 @@ std::vector<std::vector<int>> keywords = {
 	{ KW_FIRE }, // Fire
 	{ KW_CUTTER, KW_BOOMERANG, KW_RM_CUT }, // Cut
 	{ KW_TIME, KW_STATUS, KW_AOE }, // Time
-	{ KW_MELEE, KW_MOBILITY, KW_PHYSICAL, KW_SOLIDIFIER }, // Oil // -SOLIDIFEIR ?
+	{ KW_MELEE, KW_MOBILITY, KW_PHYSICAL, KW_SOLIDIFIER }, // Oil // -SOLIDIFIER ?
 	
 	//MM2
 	{ KW_CRAWLER, KW_WATER }, // Bubble
@@ -210,7 +212,7 @@ std::vector<std::vector<int>> keywords = {
 	{ KW_BOOMERANG, KW_CUTTER, KW_RM_RING }, // Ring
 	{ KW_RM_DUST }, // Dust
 	{ KW_FIRE, KW_CHARGEABLE }, /// Pharaoh
-	{ KW_SHIELD, KW_PROTECTOR }, // Skull
+	{ KW_SHIELD, KW_PROTECTOR, KW_SOUL }, // Skull
 	{ KW_TARGETER }, // Dive
 	{ KW_WATER, KW_AOE }, // Toad
 	{ KW_LIGHT, KW_STATUS, KW_AOE }, // Bright
@@ -222,7 +224,7 @@ std::vector<std::vector<int>> keywords = {
 	{ KW_SPREAD, KW_GAME_5, KW_EARTH }, // Stone
 	{ KW_CRAWLER, KW_WATER, KW_GAME_5, KW_RAPID_FIRE }, // Wave
 	{ KW_BOUNCY, KW_GAME_5, KW_EARTH }, // Crystal
-	{ KW_SHIELD, KW_GAME_5 }, // Star
+	{ KW_SHIELD, KW_GAME_5 }, // Star // KW_SOUL ? (nope)
 	{ KW_GAME_5, KW_AOE }, // Gravity
 
 	//MM6
@@ -233,9 +235,9 @@ std::vector<std::vector<int>> keywords = {
 	{ KW_NATURE, KW_CUTTER }, // Tomahawk
 	{ KW_CRAWLER, KW_WIND }, // Wind
 	{ KW_BOOMERANG }, // Knight
-	{ KW_LIGHT, KW_TIME, KW_AOE }, // Centaur
+	{ KW_TIME, KW_AOE, KW_SOUL }, // Centaur
 
-	//MM7
+	// MM7
 	{ KW_ICE }, // Freeze
 	{ KW_CHARGEABLE, KW_BOUNCY }, // Shade
 	{ KW_CHARGEABLE, KW_BOUNCY, KW_SPREAD }, // Spring
@@ -257,14 +259,14 @@ std::vector<std::vector<int>> keywords = {
 	{ KW_WIND, KW_MOBILITY }, // Tengu8
 
 	//MMB
-	{ KW_WIND, KW_CUTTER, KW_MELEE, KW_BOUNCY, KW_MOBILITY  }, // TenguB // CHARGEABLE // KW_MOBILITY
-	{ KW_FIRE, KW_RAPID_FIRE }, // Burner
-	{ KW_SPREAD, KW_EARTH }, // Ground
-	{ KW_BOOMERANG }, // Magic
-	{ KW_TARGETER, KW_BOMB }, // Pirate
-	{ KW_TARGETER, KW_LIGHT }, // AstroB
-	{ KW_SHIELD, KW_CRAWLER, KW_ICE, KW_BOUNCY }, // Cold // KW_PROTECTOR
-	{ KW_LIGHT, KW_ELEC, KW_AOE }, // Dynamo
+	{ KW_WIND, KW_CUTTER, KW_MELEE, KW_BOUNCY, KW_MOBILITY, KW_GAME_BASS  }, // TenguB // CHARGEABLE // KW_MOBILITY
+	{ KW_FIRE, KW_RAPID_FIRE, KW_GAME_BASS}, // Burner
+	{ KW_SPREAD, KW_EARTH, KW_GAME_BASS }, // Ground
+	{ KW_BOOMERANG, KW_SOUL, KW_GAME_BASS }, // Magic
+	{ KW_TARGETER, KW_BOMB, KW_GAME_BASS }, // Pirate
+	{ KW_TARGETER, KW_LIGHT, KW_SOUL, KW_GAME_BASS }, // AstroB
+	{ KW_SHIELD, KW_CRAWLER, KW_ICE, KW_BOUNCY, KW_GAME_BASS }, // Cold // KW_PROTECTOR
+	{ KW_LIGHT, KW_ELEC, KW_AOE, KW_GAME_BASS }, // Dynamo
 
 	// MM9
 	{ KW_CRAWLER, KW_ELEC, KW_BOUNCY, KW_RAPID_FIRE }, // Plug
@@ -287,7 +289,7 @@ std::vector<std::vector<int>> keywords = {
 	{ KW_CUTTER, KW_SPREAD, KW_RAPID_FIRE }, // Blade
 	
 	//MMV
-	{ KW_PROTECTOR }, // Mercury
+	{ KW_PROTECTOR, KW_SOUL }, // Mercury
 	{ KW_WATER, KW_BOMB }, // Venus
 	{ KW_BOMB }, // Mars
 	{ KW_WATER }, // Neptune // KW_SPREAD
@@ -303,7 +305,7 @@ std::vector<std::vector<int>> keywords = {
 	{ KW_CUTTER, KW_RAPID_FIRE }, // Punk // +BOUNCY?
 	{ KW_SHIELD, KW_PROTECTOR }, // Enker :: CHARGEABLE
 	
-	{ KW_LIGHT, KW_CHARGEABLE, KW_CRAWLER, KW_SPREAD }, // Ra Thor
+	{ KW_LIGHT, KW_CHARGEABLE, KW_CRAWLER, KW_SPREAD }, // Ra Thor // KW_SOUL ?
 	
 	// 2D
 	// To add : 
@@ -332,7 +334,8 @@ std::vector<std::vector<int>> keywords = {
 	{ KW_SHIELD }, // Virus Outbreak
 	{  }, // Photon Flare
 	{ KW_MELEE, KW_CUTTER, KW_RAPID_FIRE }, // Brandishing Blade
-	
+	{ KW_MELEE, KW_PHYSICAL }, // Doppler Attack // -KW_Physical ?
+
 	// 3D
 	// To add : SHIELD, MELEE, CUTTER
 	{ KW_METGUARD2, KW_SHIELD }, // Met Guard 2
@@ -387,6 +390,7 @@ int recipes[MAX_2345D][2] =
 	{ KW_PROTECTOR, KW_STATUS },	// Virus Outbreak
 	{ KW_LIGHT, KW_AOE },	// Photon Flare
 	{ KW_CUTTER, KW_CHARGEABLE },	// Brandishing Blade
+	{ KW_SOUL, KW_GAME_BASS },	// Doppler Attack
 	
 	// 3D
 	{ KW_METGUARD1, KW_SHIELD },	// Met Guard 2
@@ -438,7 +442,7 @@ void countKeywords() {
     countTierKeywords(END_1D,END_2D,1);
     countTierKeywords(END_2D,END_3D,2);
     countTierKeywords(END_3D,END_4D,3);
-
+	
     int nameIndex = 0; int activeKeyword;
     for (int i = 0; i < LARGEST_KW_INDEX+1; i++) {
         activeKeyword = 0;
@@ -495,7 +499,7 @@ int fusionCount[TABLE_CAPACITY-1] = { 0 };
 
 int search(int wep1, int wep2) {
     int bestRecipe = -1;
-    int goingForATier =  weaponTier(wep2)+1;//std::max(weaponTier(wep1), weaponTier(wep2))+1;
+    int goingForATier =  weaponTier(wep2)+1;
     int startRecipe, endRecipe; bool count = false;
     switch(goingForATier) {
         case 2: startRecipe = 0; endRecipe = MAX_2D; break;
@@ -519,7 +523,6 @@ int search(int wep1, int wep2) {
         }
     }
     return (bestRecipe == -1 ? -1 : bestRecipe+END_1D);
-
 }
 
 void computeDatabase() {
@@ -543,6 +546,7 @@ int main(int argc, char *argv[]) {
 	if (!debug) { std::cout.setstate(std::ios_base::failbit); }
     countKeywords();
     computeDatabase();
+
 
     std::ofstream dbFile;
     dbFile.open("xwdb");
@@ -580,8 +584,7 @@ int main(int argc, char *argv[]) {
 	for (int i = 0; i < TABLE_CAPACITY-1; i++) {
 		int totalCombinations;
 		switch(i) {
-			case 0: totalCombinations = ((END_1D)*(END_1D-1))/2; break;
-						
+			case 0: totalCombinations = ((END_1D)*(END_1D-1))/2; break;						
 			case 1: totalCombinations = ((END_2D)*(END_2D-1))/2 - ((END_2D-MAX_2D)*(END_2D-MAX_2D-1))/2; break;
 			case 2: totalCombinations = ((END_3D)*(END_3D-1))/2 - ((END_3D-MAX_3D)*(END_3D-MAX_3D-1))/2; break;
 			case 3: totalCombinations = ((END_4D)*(END_4D-1))/2 - ((END_4D-MAX_4D)*(END_4D-MAX_4D-1))/2; break;
