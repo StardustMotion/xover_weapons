@@ -224,7 +224,7 @@ std::vector<std::vector<int>> keywords = {
 	{ KW_SPREAD, KW_GAME_5, KW_EARTH }, // Stone
 	{ KW_CRAWLER, KW_WATER, KW_GAME_5, KW_RAPID_FIRE }, // Wave
 	{ KW_BOUNCY, KW_GAME_5, KW_EARTH }, // Crystal
-	{ KW_SHIELD, KW_GAME_5 }, // Star // KW_SOUL ? (nope)
+	{ KW_SHIELD, KW_GAME_5 }, // Star //
 	{ KW_GAME_5, KW_AOE }, // Gravity
 
 	//MM6
@@ -305,7 +305,7 @@ std::vector<std::vector<int>> keywords = {
 	{ KW_CUTTER, KW_RAPID_FIRE }, // Punk // +BOUNCY?
 	{ KW_SHIELD, KW_PROTECTOR }, // Enker :: CHARGEABLE
 	
-	{ KW_LIGHT, KW_CHARGEABLE, KW_CRAWLER, KW_SPREAD }, // Ra Thor // KW_SOUL ?
+	{ KW_LIGHT, KW_CHARGEABLE, KW_CRAWLER, KW_SPREAD }, // Ra Thor 
 	
 	// 2D
 	// To add : 
