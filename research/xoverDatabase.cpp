@@ -202,7 +202,7 @@ std::vector<std::vector<int>> keywords = {
 	{ KW_MELEE, KW_PHYSICAL }, // Top
 	{ KW_NATURE, KW_RAPID_FIRE }, // Needle
 	{ KW_CUTTER, KW_BOOMERANG }, // Shadow
-	{ KW_LIGHT, KW_BOUNCY }, // Gemini
+	{ KW_LIGHT, KW_BOUNCY, KW_SOUL }, // Gemini
 	{ KW_CRAWLER, KW_NATURE }, // Snake
 	{ KW_PHYSICAL }, // Hard
 	{ KW_ELEC, KW_STATUS }, // Spark
@@ -211,7 +211,7 @@ std::vector<std::vector<int>> keywords = {
 	{ KW_BOMB, KW_EARTH }, // Drill
 	{ KW_BOOMERANG, KW_CUTTER, KW_RM_RING }, // Ring
 	{ KW_RM_DUST }, // Dust // KW_SPLIT
-	{ KW_FIRE, KW_CHARGEABLE }, /// Pharaoh
+	{ KW_FIRE, KW_CHARGEABLE }, // Pharaoh
 	{ KW_SHIELD, KW_PROTECTOR, KW_SOUL }, // Skull
 	{ KW_TARGETER }, // Dive
 	{ KW_WATER, KW_AOE }, // Toad
@@ -233,7 +233,7 @@ std::vector<std::vector<int>> keywords = {
 	{ KW_RM_YAMATO, KW_CUTTER, KW_RAPID_FIRE }, // Yamato
 	{ KW_SHIELD, KW_NATURE, KW_PROTECTOR }, // Plant
 	{ KW_NATURE, KW_CUTTER }, // Tomahawk
-	{ KW_CRAWLER, KW_WIND }, // Wind
+	{ KW_CRAWLER, KW_WIND }, // Wind // -kw_crawler
 	{ KW_BOOMERANG }, // Knight
 	{ KW_TIME, KW_AOE, KW_SOUL }, // Centaur
 
@@ -242,7 +242,7 @@ std::vector<std::vector<int>> keywords = {
 	{ KW_CHARGEABLE, KW_BOUNCY }, // Shade
 	{ KW_CHARGEABLE, KW_BOUNCY, KW_SPREAD }, // Spring
 	{ KW_BOMB }, // Burst
-	{ KW_CRAWLER, KW_FIRE, KW_SHIELD, KW_MOBILITY }, // Turbo
+	{ KW_FIRE, KW_SHIELD, KW_MOBILITY }, // Turbo // KW_CRAWLER
 	{ KW_SHIELD, KW_SPREAD, KW_CHARGEABLE }, // Junk // KW_PROTECTOR
 	{ KW_MELEE, KW_PHYSICAL }, // Slash // KW_NATURE // KW_CUTTER
 	{ KW_ELEC, KW_LIGHT }, // Cloud // KW_SPLIT
@@ -259,13 +259,13 @@ std::vector<std::vector<int>> keywords = {
 	{ KW_WIND, KW_MOBILITY }, // Tengu8
 
 	//MMB
-	{ KW_WIND, KW_CUTTER, KW_MELEE, KW_GAME_BASS, KW_BOUNCY }, // TenguB  // KW_MOBILITY
+	{ KW_GAME_BASS, KW_CUTTER, KW_WIND, KW_MELEE, KW_BOUNCY }, // TenguB  // KW_MOBILITY
 	{ KW_FIRE, KW_RAPID_FIRE, KW_GAME_BASS }, // Burner
-	{ KW_SPREAD, KW_EARTH, KW_GAME_BASS }, // Ground // -KW_SPREAD; KW_SPLIT ?
+	{ KW_EARTH, KW_GAME_BASS }, // Ground // -KW_SPREAD; KW_SPLIT ? NOT A SPREAD.
 	{ KW_BOOMERANG, KW_SOUL, KW_GAME_BASS }, // Magic
 	{ KW_TARGETER, KW_BOMB, KW_GAME_BASS }, // Pirate
 	{ KW_TARGETER, KW_LIGHT, KW_SOUL, KW_GAME_BASS }, // AstroB
-	{ KW_SHIELD, KW_CRAWLER, KW_ICE, KW_BOUNCY, KW_GAME_BASS }, // Cold // KW_PROTECTOR
+	{ KW_SHIELD, KW_ICE, KW_BOUNCY, KW_GAME_BASS }, // Cold // KW_PROTECTOR  KW_MOBILITY KW_CRAWLER
 	{ KW_LIGHT, KW_ELEC, KW_AOE, KW_GAME_BASS }, // Dynamo
 
 	// MM9
@@ -280,7 +280,7 @@ std::vector<std::vector<int>> keywords = {
 
 	//MM10
 	{ KW_FIRE }, // Solar // KW_SPLIT
-	{ KW_CUTTER, KW_MOBILITY, KW_CRAWLER }, // Nitro
+	{ KW_CUTTER, KW_MOBILITY, KW_CRAWLER }, // Nitro -kw_crawler
 	{ KW_BOUNCY }, // Strike
 	{ KW_ELEC }, // Sheep
 	{ KW_BOMB, KW_TARGETER }, // Commando
@@ -297,7 +297,7 @@ std::vector<std::vector<int>> keywords = {
 	{ KW_SHIELD, KW_PROTECTOR }, // Saturn
 	{ KW_EARTH, KW_PHYSICAL }, // Uranus // KW_SPLIT
 	{ KW_CHARGEABLE, KW_MELEE, KW_MOBILITY, KW_PHYSICAL }, // Pluto
-	{ KW_LIGHT, KW_TARGETER }, // Terra
+	{ KW_LIGHT, KW_TARGETER, KW_SOUL }, // Terra
 
 	//MMK
 	{ KW_MELEE, KW_MOBILITY, KW_TIME }, // Quint // KW8physical ?
