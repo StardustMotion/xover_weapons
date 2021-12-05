@@ -9,7 +9,7 @@
 #define MAX_1D 103
 
 // This indicates the index at which the ND tier terminates 
-#define MAX_2D 24
+#define MAX_2D 25
 #define MAX_3D 6
 #define MAX_4D 3
 #define MAX_5D 2
@@ -77,6 +77,7 @@ std::string names[TOTAL_WEPS] = {
 	"Scatter Ring", "Yoga Inferno", "Glue Shot", "Super Arrow",
 	"Ground Dash",	"Hellfire Cutter", "Time Bomb", "Wing Spiral",
 	"Virus Outbreak", "Photon Flare", "Brandishing Blade",	"Doppler Attack",
+	"Splash Laser", 
 	
 	// 3D
 	"Met Guard 2", "Thousand Spear V2", "Countershading Tracer", "Ice Gatling",
@@ -335,6 +336,7 @@ std::vector<std::vector<int>> keywords = {
 	{  }, // Photon Flare
 	{ KW_MELEE, KW_CUTTER, KW_RAPID_FIRE }, // Brandishing Blade
 	{ KW_MELEE, KW_PHYSICAL }, // Doppler Attack // -KW_Physical ?
+	{ KW_RAPID_FIRE }, // Splash Laser
 
 	// 3D
 	// To add : SHIELD, MELEE, CUTTER
@@ -392,6 +394,7 @@ int recipes[MAX_2345D][2] =
 	{ KW_LIGHT, KW_AOE },	// Photon Flare
 	{ KW_CUTTER, KW_CHARGEABLE },	// Brandishing Blade
 	{ KW_SOUL, KW_GAME_BASS },	// Doppler Attack
+	{ KW_RAPID_FIRE, KW_WATER },	// Splash Laser
 	
 	// 3D
 	{ KW_METGUARD1, KW_SHIELD },	// Met Guard 2
