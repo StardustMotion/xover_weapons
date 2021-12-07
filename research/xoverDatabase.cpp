@@ -9,7 +9,7 @@
 #define MAX_1D 103
 
 // This indicates the index at which the ND tier terminates 
-#define MAX_2D 25
+#define MAX_2D 26
 #define MAX_3D 6
 #define MAX_4D 3
 #define MAX_5D 2
@@ -77,7 +77,7 @@ std::string names[TOTAL_WEPS] = {
 	"Scatter Ring", "Yoga Inferno", "Glue Shot", "Super Arrow",
 	"Ground Dash",	"Hellfire Cutter", "Time Bomb", "Wing Spiral",
 	"Virus Outbreak", "Photon Flare", "Brandishing Blade",	"Doppler Attack",
-	"Splash Laser", 
+	"Splash Laser", "Ice Javelin",
 	
 	// 3D
 	"Met Guard 2", "Thousand Spear V2", "Countershading Tracer", "Ice Gatling",
@@ -103,7 +103,7 @@ std::vector<std::string> kwNames = {
 
     "LIGHT", "BOMB", "ICE", "TIME", "ELEC", "NATURE", "CUTTER",
 
-    "PHYSICAL", "SOLIDIFIER", "SOUL",
+    "PHYSICAL", "SOLIDIFIER", "SOUL", "TRADITIONAL",
 
     "BOOMERANG", "SHIELD", "CRAWLER", "TARGETER", "BOUNCY", "CHARGEABLE", "MELEE", "SPREAD",
     "MOBILITY", "RAPID-FIRE", "PROTECTOR", "STATUS", "AOE",
@@ -132,6 +132,7 @@ std::vector<std::string> kwNames = {
 #define KW_PHYSICAL 20
 #define KW_SOLIDIFIER 21 // SOLID_LIQUID ? hmmm....
 #define KW_SOUL 22
+#define KW_TRADITIONAL 23
 
 // Behavior
 #define KW_BOOMERANG 30
@@ -194,7 +195,7 @@ std::vector<std::vector<int>> keywords = {
 	{ KW_FIRE, KW_CHARGEABLE }, // Heat
 	{ KW_SHIELD, KW_NATURE, KW_PROTECTOR }, // Wood
 	{ KW_WIND, KW_SPREAD }, // Air
-	{ KW_RM_QUICK, KW_BOOMERANG, KW_CUTTER, KW_RAPID_FIRE }, // Quick
+	{ KW_RM_QUICK, KW_BOOMERANG, KW_CUTTER, KW_RAPID_FIRE, KW_TRADITIONAL }, // Quick
 	{ KW_BOMB }, // Crash
 	{ KW_RM_FLASH, KW_TIME, KW_STATUS, KW_AOE }, // Flash
 	
@@ -202,15 +203,15 @@ std::vector<std::vector<int>> keywords = {
 	{ KW_TARGETER }, // Magnet
 	{ KW_MELEE, KW_PHYSICAL }, // Top
 	{ KW_NATURE, KW_RAPID_FIRE }, // Needle
-	{ KW_CUTTER, KW_BOOMERANG }, // Shadow
+	{ KW_CUTTER, KW_BOOMERANG, KW_TRADITIONAL }, // Shadow
 	{ KW_LIGHT, KW_BOUNCY, KW_SOUL }, // Gemini
-	{ KW_CRAWLER, KW_NATURE }, // Snake
+	{ KW_CRAWLER, KW_NATURE }, // Snake // KW_ANIMAL
 	{ KW_PHYSICAL }, // Hard
 	{ KW_ELEC, KW_STATUS }, // Spark
 
 	//MM4
 	{ KW_BOMB, KW_EARTH }, // Drill
-	{ KW_BOOMERANG, KW_CUTTER, KW_RM_RING }, // Ring
+	{ KW_BOOMERANG, KW_CUTTER, KW_RM_RING, KW_TRADITIONAL }, // Ring
 	{ KW_RM_DUST }, // Dust // KW_SPLIT
 	{ KW_FIRE, KW_CHARGEABLE }, // Pharaoh
 	{ KW_SHIELD, KW_PROTECTOR, KW_SOUL }, // Skull
@@ -231,11 +232,11 @@ std::vector<std::vector<int>> keywords = {
 	//MM6
 	{ KW_ICE, KW_SPREAD }, // Blizzard
 	{ KW_FIRE }, // Flame
-	{ KW_RM_YAMATO, KW_CUTTER, KW_RAPID_FIRE }, // Yamato
+	{ KW_RM_YAMATO, KW_CUTTER, KW_RAPID_FIRE, KW_TRADITIONAL }, // Yamato
 	{ KW_SHIELD, KW_NATURE, KW_PROTECTOR }, // Plant
-	{ KW_NATURE, KW_CUTTER }, // Tomahawk
+	{ KW_NATURE, KW_CUTTER, KW_TRADITIONAL }, // Tomahawk
 	{ KW_CRAWLER, KW_WIND }, // Wind // -kw_crawler
-	{ KW_BOOMERANG }, // Knight
+	{ KW_BOOMERANG, KW_TRADITIONAL }, // Knight
 	{ KW_TIME, KW_AOE, KW_SOUL }, // Centaur
 
 	// MM7
@@ -250,7 +251,7 @@ std::vector<std::vector<int>> keywords = {
 
 	// MM8
 	{ KW_EARTH, KW_AOE }, // Astro8
-	{ KW_FIRE, KW_MELEE }, // Sword // KW_CUTTER ? XW_TRADITIONNAL
+	{ KW_FIRE, KW_MELEE, KW_TRADITIONAL }, // Sword // KW_CUTTER ?
 	{ KW_ELEC, KW_MELEE, KW_MOBILITY }, // Clown // KW_PHYSICAL ? minus KW_MOBILITY ?
 	{ KW_TARGETER, KW_CHARGEABLE }, // Search //spread?
 	{ KW_WATER, KW_RAPID_FIRE }, // Aqua
@@ -271,12 +272,12 @@ std::vector<std::vector<int>> keywords = {
 
 	// MM9
 	{ KW_CRAWLER, KW_ELEC, KW_BOUNCY, KW_RAPID_FIRE }, // Plug
-	{ KW_LIGHT }, // Splash
+	{ KW_LIGHT, KW_TRADITIONAL }, // Splash
 	{ KW_TARGETER, KW_AOE }, // Galaxy :: BOMB
 	{ KW_SHIELD, KW_EARTH }, // Jewel
 	{ KW_SOLIDIFIER, KW_EARTH, KW_STATUS }, // Concrete
 	{ KW_WIND, KW_MOBILITY, KW_AOE }, // Tornado
-	{ KW_TARGETER, KW_NATURE }, // Hornet
+	{ KW_TARGETER, KW_NATURE }, // Hornet //ANIMAL
 	{ KW_FIRE, KW_CHARGEABLE, KW_SPREAD }, // Magma
 
 	//MM10
@@ -287,7 +288,7 @@ std::vector<std::vector<int>> keywords = {
 	{ KW_BOMB, KW_TARGETER }, // Commando
 	{ KW_ICE, KW_SOLIDIFIER, KW_STATUS }, // Chill
 	{ KW_SHIELD, KW_WATER, KW_PROTECTOR }, // Pump
-	{ KW_CUTTER, KW_SPREAD, KW_RAPID_FIRE }, // Blade
+	{ KW_CUTTER, KW_SPREAD, KW_RAPID_FIRE, KW_TRADITIONAL }, // Blade
 	
 	//MMV
 	{ KW_PROTECTOR, KW_SOUL }, // Mercury
@@ -337,6 +338,7 @@ std::vector<std::vector<int>> keywords = {
 	{ KW_MELEE, KW_CUTTER, KW_RAPID_FIRE }, // Brandishing Blade
 	{ KW_MELEE, KW_PHYSICAL }, // Doppler Attack // -KW_Physical ?
 	{ KW_RAPID_FIRE }, // Splash Laser
+	{ KW_ICE }, // Ice Javelin
 
 	// 3D
 	// To add : SHIELD, MELEE, CUTTER
@@ -395,6 +397,7 @@ int recipes[MAX_2345D][2] =
 	{ KW_CUTTER, KW_CHARGEABLE },	// Brandishing Blade
 	{ KW_SOUL, KW_GAME_BASS },	// Doppler Attack
 	{ KW_RAPID_FIRE, KW_WATER },	// Splash Laser
+	{ KW_ICE, KW_TRADITIONAL }, // Ice Javelin
 	
 	// 3D
 	{ KW_METGUARD1, KW_SHIELD },	// Met Guard 2
@@ -582,6 +585,7 @@ int main(int argc, char *argv[]) {
 
 	if (!debug) { std::cout.clear(); }
 	std::cout << "\n------------------\nDatabase was generated.\n------------------\nStatistics :\n>>> Recipe combination count :\n";
+	
 	for (int i = 0; i < MAX_2345D; i++) {
 		std::cout << "\n" << names[i+MAX_1D] << " " << recipesCount[i];
 	}
