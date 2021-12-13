@@ -11,8 +11,6 @@
 #define MAX_5D MAX_4D+2
 #define MAX_ALL_WEAPONS MAX_WEAPONS+MAX_5D   // fusions + vailla
 
-int overlaps = 0;
-
 
 
 
@@ -87,6 +85,7 @@ int overlaps = 0;
 
 // Initializing the table
 bool compatibility[MAX_WEAPONS][MAX_ALL_WEAPONS];
+int overlaps = 0;
 
 
 
@@ -331,12 +330,12 @@ int ingredients[MAX_WEAPONS + MAX_4D][5] = {
 	{ KW_LIGHT, KW_TARGETER, KW_NONE, KW_NONE, KW_NONE }, // Terra
 
 	//MMK
-	{ KW_MELEE, KW_MOBILITY, KW_TIME, KW_NONE, KW_NONE }, // Quint
+	{ KW_MELEE, KW_MOBILITY, KW_TIME, KW_NONE, KW_NONE }, // Quint // KW8physical ?
 	{ KW_BOMB, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Ballade
 	{ KW_CUTTER, KW_RAPID_FIRE, KW_NONE, KW_NONE, KW_NONE }, // Punk // +BOUNCY?
 	{ KW_SHIELD, KW_PROTECTOR, KW_NONE, KW_NONE, KW_NONE }, // Enker :: CHARGEABLE
 	
-	//{ KW_LIGHT, KW_CHARGEABLE, KW_CRAWLER, KW_SPREAD, KW_NONE }, // Ra Thor
+	// { KW_LIGHT, KW_CHARGEABLE, KW_CRAWLER, KW_SPREAD, KW_NONE }, // Ra Thor
 	
 	// 2D
 	// To add : 
@@ -357,7 +356,7 @@ int ingredients[MAX_WEAPONS + MAX_4D][5] = {
 	{ KW_NONE, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Scatter Ring
 	{ KW_RAPID_FIRE, KW_FIRE, KW_NONE, KW_NONE, KW_NONE }, // Yoga Inferno
 	{ KW_NONE, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Glue Shot
-	{ KW_TARGETER, KW_PHYSICAL, KW_NONE, KW_NONE, KW_NONE }, // Super Arrow
+	{ KW_TARGETER, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Super Arrow
 	{ KW_PHYSICAL, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Ground Dash 
 	{ KW_CUTTER, KW_FIRE, KW_NONE, KW_NONE, KW_NONE }, // Hellfire Cutter
 	{ KW_TARGETER, KW_NONE, KW_NONE, KW_NONE, KW_NONE }, // Time Bomb
@@ -392,7 +391,7 @@ int checkFusion(int kw1, int kw2, int tierOffsetLow, int tierOffsetHigh) {
     for (int i = tierOffsetLow; i < tierOffsetHigh; i++) {
         if (((recipes[i][0] == kw1) && (recipes[i][1] == kw2)) || 
             ((recipes[i][0] == kw2) && (recipes[i][1] == kw1)) ) {
-				std::cout << "\n>>> " << wepRadicals[MAX_WEAPONS+i];
+				//std::cout << "\n>>> " << wepRadicals[MAX_WEAPONS+i];
 				fusions++;
 			}
     }
@@ -413,7 +412,7 @@ bool isFusionDeep(int x, int y, int tierOffsetLow, int tierOffsetHigh) {
         kw1++;
     }
 	if (i > 1) { overlaps += i-1;
-		std::cout << "\n" << wepRadicals[x] << " and " << wepRadicals[y] << " have " << i-1 << " overlaps";
+		//std::cout << "\n" << wepRadicals[x] << " and " << wepRadicals[y] << " have " << i-1 << " overlaps";
 		 }
     return (i > 0);
 }
