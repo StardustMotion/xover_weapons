@@ -1,4 +1,3 @@
-
 #include <iostream>
 #include <random>
 #include <fstream>
@@ -11,7 +10,7 @@
 // This indicates the index at which the ND tier terminates 
 #define MAX_2D 26
 #define MAX_3D 6
-#define MAX_4D 3
+#define MAX_4D 4
 #define MAX_5D 2
 
 #define MAX_23D MAX_2D + MAX_3D
@@ -84,7 +83,7 @@ std::string names[TOTAL_WEPS] = {
 	"Red Hot Kick",	"Boomerang Cutter",
 	
 	// 4D
-	"Met Guard 3", "Thousand Spear V3", "Thousand Knives",
+	"Met Guard 3", "Thousand Spear V3", "Thousand Knives",	"Falling Steel Sword",
 	
 	// 5D
 	"Met Guard 3 EX", "Thousand Spear V5"
@@ -103,7 +102,7 @@ std::vector<std::string> kwNames = {
 
     "LIGHT", "BOMB", "ICE", "TIME", "ELEC", "NATURE", "CUTTER",
 
-    "PHYSICAL", "SOLIDIFIER", "SOUL", "TRADITIONAL",
+    "PHYSICAL", "SOLIDIFIER", "SOUL", "TRADITIONAL", "SCRAP",
 
     "BOOMERANG", "SHIELD", "CRAWLER", "TARGETER", "BOUNCY", "CHARGEABLE", "MELEE", "SPREAD",
     "MOBILITY", "RAPID-FIRE", "PROTECTOR", "STATUS", "AOE",
@@ -133,6 +132,7 @@ std::vector<std::string> kwNames = {
 #define KW_SOLIDIFIER 21 // SOLID_LIQUID ? hmmm....
 #define KW_SOUL 22
 #define KW_TRADITIONAL 23
+#define KW_SCRAP 24
 
 // Behavior
 #define KW_BOOMERANG 30
@@ -191,7 +191,7 @@ std::vector<std::vector<int>> keywords = {
 	
 	//MM2
 	{ KW_CRAWLER, KW_WATER }, // Bubble
-	{ KW_CUTTER, KW_RAPID_FIRE }, // Metal
+	{ KW_CUTTER, KW_RAPID_FIRE, KW_SCRAP }, // Metal
 	{ KW_FIRE, KW_CHARGEABLE }, // Heat
 	{ KW_SHIELD, KW_NATURE, KW_PROTECTOR }, // Wood
 	{ KW_WIND, KW_SPREAD }, // Air
@@ -200,7 +200,7 @@ std::vector<std::vector<int>> keywords = {
 	{ KW_RM_FLASH, KW_TIME, KW_STATUS, KW_AOE }, // Flash
 	
 	//MM3
-	{ KW_TARGETER }, // Magnet
+	{ KW_TARGETER, KW_SCRAP }, // Magnet
 	{ KW_MELEE, KW_PHYSICAL }, // Top
 	{ KW_NATURE, KW_RAPID_FIRE }, // Needle
 	{ KW_CUTTER, KW_BOOMERANG, KW_TRADITIONAL }, // Shadow
@@ -212,7 +212,7 @@ std::vector<std::vector<int>> keywords = {
 	//MM4
 	{ KW_BOMB, KW_EARTH }, // Drill
 	{ KW_BOOMERANG, KW_CUTTER, KW_RM_RING, KW_TRADITIONAL }, // Ring
-	{ KW_RM_DUST }, // Dust // KW_SPLIT
+	{ KW_RM_DUST, KW_SCRAP }, // Dust // KW_SPLIT
 	{ KW_FIRE, KW_CHARGEABLE }, // Pharaoh
 	{ KW_SHIELD, KW_PROTECTOR, KW_SOUL }, // Skull
 	{ KW_TARGETER }, // Dive
@@ -222,7 +222,7 @@ std::vector<std::vector<int>> keywords = {
 	//MM5
 	{ KW_BOMB, KW_GAME_5 }, // Napalm
 	{ KW_MELEE, KW_MOBILITY, KW_GAME_5, KW_PHYSICAL }, // Charge
-	{ KW_WIND, KW_CUTTER, KW_GAME_5  }, // Gyro // KW_SPLIT
+	{ KW_WIND, KW_CUTTER, KW_GAME_5, KW_SCRAP  }, // Gyro // KW_SPLIT
 	{ KW_SPREAD, KW_GAME_5, KW_EARTH }, // Stone
 	{ KW_CRAWLER, KW_WATER, KW_GAME_5, KW_RAPID_FIRE }, // Wave
 	{ KW_BOUNCY, KW_GAME_5, KW_EARTH }, // Crystal // KW_SPLIT
@@ -235,17 +235,17 @@ std::vector<std::vector<int>> keywords = {
 	{ KW_RM_YAMATO, KW_CUTTER, KW_RAPID_FIRE, KW_TRADITIONAL }, // Yamato
 	{ KW_SHIELD, KW_NATURE, KW_PROTECTOR }, // Plant
 	{ KW_NATURE, KW_CUTTER, KW_TRADITIONAL }, // Tomahawk
-	{ KW_CRAWLER, KW_WIND }, // Wind // -kw_crawler
+	{ KW_CRAWLER, KW_WIND }, // Wind
 	{ KW_BOOMERANG, KW_TRADITIONAL }, // Knight
 	{ KW_TIME, KW_AOE, KW_SOUL }, // Centaur
 
 	// MM7
 	{ KW_ICE }, // Freeze // KW_SPLIT
 	{ KW_CHARGEABLE, KW_BOUNCY }, // Shade
-	{ KW_CHARGEABLE, KW_BOUNCY, KW_SPREAD }, // Spring
+	{ KW_CHARGEABLE, KW_BOUNCY, KW_SPREAD, KW_SCRAP }, // Spring
 	{ KW_BOMB }, // Burst
-	{ KW_FIRE, KW_SHIELD, KW_MOBILITY }, // Turbo // KW_CRAWLER
-	{ KW_SHIELD, KW_SPREAD, KW_CHARGEABLE }, // Junk // KW_PROTECTOR
+	{ KW_FIRE, KW_SHIELD, KW_MOBILITY, KW_CRAWLER }, // Turbo
+	{ KW_SHIELD, KW_SPREAD, KW_CHARGEABLE, KW_SCRAP }, // Junk // KW_PROTECTOR
 	{ KW_MELEE, KW_PHYSICAL }, // Slash // KW_NATURE // KW_CUTTER
 	{ KW_ELEC, KW_LIGHT }, // Cloud // KW_SPLIT
 
@@ -267,7 +267,7 @@ std::vector<std::vector<int>> keywords = {
 	{ KW_BOOMERANG, KW_SOUL, KW_GAME_BASS }, // Magic
 	{ KW_TARGETER, KW_BOMB, KW_GAME_BASS }, // Pirate
 	{ KW_TARGETER, KW_LIGHT, KW_SOUL, KW_GAME_BASS }, // AstroB
-	{ KW_SHIELD, KW_ICE, KW_BOUNCY, KW_GAME_BASS }, // Cold // KW_PROTECTOR  KW_MOBILITY KW_CRAWLER
+	{ KW_SHIELD, KW_ICE, KW_BOUNCY, KW_GAME_BASS, KW_CRAWLER }, // Cold // KW_PROTECTOR  KW_MOBILITY
 	{ KW_LIGHT, KW_ELEC, KW_AOE, KW_GAME_BASS }, // Dynamo
 
 	// MM9
@@ -282,7 +282,7 @@ std::vector<std::vector<int>> keywords = {
 
 	//MM10
 	{ KW_FIRE }, // Solar // KW_SPLIT
-	{ KW_CUTTER, KW_MOBILITY, KW_CRAWLER }, // Nitro -kw_crawler
+	{ KW_CUTTER, KW_MOBILITY, KW_CRAWLER, KW_SCRAP }, // Nitro
 	{ KW_BOUNCY }, // Strike
 	{ KW_ELEC }, // Sheep
 	{ KW_BOMB, KW_TARGETER }, // Commando
@@ -302,58 +302,59 @@ std::vector<std::vector<int>> keywords = {
 	{ KW_LIGHT, KW_TARGETER, KW_SOUL }, // Terra
 
 	//MMK
-	{ KW_MELEE, KW_MOBILITY, KW_TIME }, // Quint // KW8physical ?
+	{ KW_MELEE, KW_MOBILITY, KW_TIME  }, // Quint // KW8physical ?
 	{ KW_BOMB }, // Ballade
-	{ KW_CUTTER, KW_RAPID_FIRE }, // Punk // +BOUNCY?
+	{ KW_CUTTER, KW_RAPID_FIRE, KW_SCRAP }, // Punk // +BOUNCY?
 	{ KW_SHIELD, KW_PROTECTOR }, // Enker :: CHARGEABLE
 	
 	{ KW_LIGHT, KW_CHARGEABLE, KW_CRAWLER, KW_SPREAD }, // Ra Thor 
 	
 	// 2D
 	// To add : 
-	// SHIELD, MELEE, BOUNCY, TARGETER, RAPID_FIRE, ICE, FIRE, PHYSICAL
+	// SHIELD, MELEE, BOUNCY, TARGETER, RAPID_FIRE, ICE, FIRE, PHYSICAL, SCRAP, TRADITIONNAL
 	// CUTTER, BOOMERANG
 	{ KW_METGUARD1, KW_SHIELD }, // Met Guard 1
 	{ KW_FIRE }, // Melt Creeper
 	{ KW_TARGETER }, // Aiming Laser
 	{ KW_RAPID_FIRE, KW_FIRE }, // Delay Flame
-	{ KW_MELEE, KW_PHYSICAL }, // Recycle Inhaler
-	{ KW_MELEE }, // Forest Whip
+	{ KW_MELEE, KW_PHYSICAL, KW_SCRAP }, // Recycle Inhaler
+	{ KW_MELEE, KW_TRADITIONAL }, // Forest Whip
 	{ KW_TARGETER }, // Blast Missile
-	{ KW_THOUSANDSPEAR1, KW_MELEE, KW_CUTTER }, // Thousand Spear
+	{ KW_THOUSANDSPEAR1, KW_MELEE, KW_CUTTER, KW_TRADITIONAL }, // Thousand Spear
 	{ KW_MELEE, KW_ICE }, // White Rose Cluster
 	{ KW_BOOMERANG }, // Leaf Boomerang
-	{ KW_SHIELD }, // Triad Thunder
+	{ KW_SHIELD }, // Triad Thunder // SCRAP ?
 	{ KW_CUTTER, KW_BOUNCY }, // Sonic Slicer
 	{ }, // Scatter Ring
 	{ KW_RAPID_FIRE, KW_FIRE }, // Yoga Inferno
 	{  }, // Glue Shot
-	{ KW_TARGETER }, // Super Arrow
-	{ KW_PHYSICAL }, // Ground Dash 
+	{ KW_TARGETER }, // Super Arrow // TRADITIONNAL ?
+	{ KW_PHYSICAL, KW_SCRAP }, // Ground Dash 
 	{ KW_CUTTER, KW_FIRE, KW_BOOMERANG }, // Hellfire Cutter
 	{ KW_TARGETER }, // Time Bomb
 	{ KW_BOUNCY }, // Wing Spiral
 	{ KW_SHIELD }, // Virus Outbreak
 	{  }, // Photon Flare
-	{ KW_MELEE, KW_CUTTER, KW_RAPID_FIRE }, // Brandishing Blade
+	{ KW_MELEE, KW_CUTTER, KW_RAPID_FIRE, KW_TRADITIONAL }, // Brandishing Blade
 	{ KW_MELEE, KW_PHYSICAL }, // Doppler Attack // -KW_Physical ?
 	{ KW_RAPID_FIRE }, // Splash Laser
-	{ KW_ICE }, // Ice Javelin
+	{ KW_ICE, KW_TRADITIONAL }, // Ice Javelin
 
 	// 3D
-	// To add : SHIELD, MELEE, CUTTER
+	// To add : SHIELD, MELEE, CUTTER, SCRAP, TRADITIONNAL
 	{ KW_METGUARD2, KW_SHIELD }, // Met Guard 2
-	{ KW_THOUSANDSPEAR2, KW_MELEE, KW_CUTTER }, // Thousand Spear V2
+	{ KW_THOUSANDSPEAR2, KW_MELEE, KW_CUTTER, KW_TRADITIONAL }, // Thousand Spear V2
 	{  }, // Countershading Tracer
 	{  }, // Ice Gatling
 	{ KW_MELEE }, // Red Hot Kick
-	{ KW_CUTTER }, // Boomerang Cutter
+	{ KW_CUTTER, KW_TRADITIONAL }, // Boomerang Cutter
 	
 	// 4D
 	// To add : SHIELD, MELEE
 	{ KW_METGUARD3, KW_SHIELD }, // Met Guard 3
 	{ KW_THOUSANDSPEAR3, KW_MELEE }, // Thousand Spear V3
-	{  }, // Thousand Knives
+	{  }, // Thousand Knives,
+	{ KW_MELEE }, // Falling Steel Sword
 	
 	// 5D
 	// MetGuard 3 EX
@@ -394,7 +395,7 @@ int recipes[MAX_2345D][2] =
 	{ KW_WIND, KW_MOBILITY },	// Wing Spiral
 	{ KW_PROTECTOR, KW_STATUS },	// Virus Outbreak
 	{ KW_LIGHT, KW_AOE },	// Photon Flare
-	{ KW_CUTTER, KW_CHARGEABLE },	// Brandishing Blade
+	{ KW_TRADITIONAL, KW_CHARGEABLE },	// Brandishing Blade
 	{ KW_SOUL, KW_GAME_BASS },	// Doppler Attack
 	{ KW_RAPID_FIRE, KW_WATER },	// Splash Laser
 	{ KW_ICE, KW_TRADITIONAL }, // Ice Javelin
@@ -411,6 +412,7 @@ int recipes[MAX_2345D][2] =
 	{ KW_METGUARD2, KW_SHIELD },	// Met Guard 3
 	{ KW_THOUSANDSPEAR2, KW_MELEE },	// Thousand Spear V3
 	{ KW_RM_FLASH, KW_CUTTER },	// Thousand Knives
+	{ KW_TRADITIONAL, KW_SCRAP },	// Falling Steel Sword
 	
 	// 5D
 	{ KW_METGUARD3, KW_SHIELD },	// Met Guard 3 EX

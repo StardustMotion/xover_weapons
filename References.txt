@@ -1,0 +1,103 @@
+LAST XW SPRITE USED : anchor sprite
+
+6735 has been chosen for the starting number to assign some IDs related to this mod
+Congratulations to 6735 !!!!!
+
+TID number        Usage
+
+6735			  Weapon capsules/screws/WTanks respawn management
+
+6736~6767         > Eddie random weapon / Weapon drop on death
+				   > some spawnitemEx data conveying
+6770 to 7769 included	1000 possible TID used to locally represent some data
+					and have parents actor convey them to their childs through SpawnItemEx
+do these supposed 0-tics lasting 6736 to 7769 TIDs even need to use this range of values?
+
+7800 ==> 7831 included : TIDs for custom cameras for each player
+
+
+
+
+
+
+
+
+
+Also, HudMessages Ids (remember : the smaller the ID, the highest priority it gets)
+
+4269 : Help menu arrows
+4270 : Help Menu
+
+5994 : weapon description animated mugshot
+5995 : weapon description icon
+5996 : weapon description rank
+5997 : weapon description name
+5998 : weapon description description
+5999 : weapon description menu
+
+6000 and 6001 : Made weapon icon and its shadow spotlight
+6020~6027 included : crafting table smoke
+6040 : Already inserted weapon cell
+6051~6060 included : table of crafting's inserted weapons and their cell
+
+6081 ==> 6090 included : recipe tips + their cell
+
+
+6100 : ND weapon prediction current screw count
+6101 : ND weapon prediction screw cost
+6102 : ND weapon prediction screw cost window flash
+6103 : ND weapon prediction screw cost window
+6104 : ND weapon prediction neon
+6105 : ND weapon prediction cell border
+6106: ND weapon prediction static
+6107 : ND weapon prediction icon
+
+6150 and 6151 : Made weapon's flash spotlight
+
+
+6300 : Error message
+6314 => +inf : weapons present on the map's bootup
+6505 => +inf : weapons present on the map's bootup menu
+
+6719 : Crafting table pop weapon segfault
+6720 : Crafting table detected fusion flash
+
+
+6736 up to 6767 included
+
+6880 : Weapon cells
+6883 : Electricity spark
+6892 to 6895 included : uncombine info/animation
+
+
+
+6920 : Main window
+
+
+-------------------------------------------------------------------------------
+---------------------		 Damage Types 			---------------------------
+-------------------------------------------------------------------------------
+
+
+
+PLANT BARRIER HEALS  A BIT MMORE FOR THE AMMO COST ?
+
+use firecustommissile for ND weapons ammo cost
+
+find a solution to "hard replace" actors
+(for example so the cossack ship episode works when giving RollINGcUTETRwEP (it 
+replaces the actual)
+OR we could just rewrite RollingCutter BUT make sure the console doesn't print that
+
+
+
+
+
+
+-------------------------------------------------------------------------------
+---------------------		 Global Variables		---------------------------
+-------------------------------------------------------------------------------
+
+global int 53: LMS weapon rotation
+global int 54: weapons picked up
+global int 55: fusion events history
