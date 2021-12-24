@@ -9,7 +9,7 @@
 
 // This indicates the index at which the ND tier terminates 
 #define MAX_2D 26
-#define MAX_3D 6
+#define MAX_3D 7
 #define MAX_4D 4
 #define MAX_5D 2
 
@@ -80,7 +80,7 @@ std::string names[TOTAL_WEPS] = {
 	
 	// 3D
 	"Met Guard 2", "Thousand Spear V2", "Countershading Tracer", "Ice Gatling",
-	"Red Hot Kick",	"Boomerang Cutter",
+	"Red Hot Kick",	"Boomerang Cutter",	"Jawz Hunters",
 	
 	// 4D
 	"Met Guard 3", "Thousand Spear V3", "Thousand Knives",	"Falling Steel Sword",
@@ -102,7 +102,7 @@ std::vector<std::string> kwNames = {
 
     "LIGHT", "BOMB", "ICE", "TIME", "ELEC", "NATURE", "CUTTER",
 
-    "PHYSICAL", "SOLIDIFIER", "SOUL", "TRADITIONAL", "SCRAP",
+    "PHYSICAL", "SOLIDIFIER", "SOUL", "TRADITIONAL", "SCRAP", "ANIMAL"
 
     "BOOMERANG", "SHIELD", "CRAWLER", "TARGETER", "BOUNCY", "CHARGEABLE", "MELEE", "SPREAD",
     "MOBILITY", "RAPID-FIRE", "PROTECTOR", "STATUS", "AOE",
@@ -133,6 +133,7 @@ std::vector<std::string> kwNames = {
 #define KW_SOUL 22
 #define KW_TRADITIONAL 23
 #define KW_SCRAP 24
+#define KW_ANIMAL 25
 
 // Behavior
 #define KW_BOOMERANG 30
@@ -205,7 +206,7 @@ std::vector<std::vector<int>> keywords = {
 	{ KW_NATURE, KW_RAPID_FIRE }, // Needle
 	{ KW_CUTTER, KW_BOOMERANG, KW_TRADITIONAL }, // Shadow
 	{ KW_LIGHT, KW_BOUNCY, KW_SOUL }, // Gemini
-	{ KW_CRAWLER, KW_NATURE }, // Snake // KW_ANIMAL
+	{ KW_CRAWLER, KW_NATURE, KW_ANIMAL }, // Snake
 	{ KW_PHYSICAL }, // Hard
 	{ KW_ELEC, KW_STATUS }, // Spark
 
@@ -277,7 +278,7 @@ std::vector<std::vector<int>> keywords = {
 	{ KW_SHIELD, KW_EARTH }, // Jewel
 	{ KW_SOLIDIFIER, KW_EARTH, KW_STATUS }, // Concrete
 	{ KW_WIND, KW_MOBILITY, KW_AOE }, // Tornado
-	{ KW_TARGETER, KW_NATURE }, // Hornet //ANIMAL
+	{ KW_TARGETER, KW_NATURE, KW_ANIMAL }, // Hornet
 	{ KW_FIRE, KW_CHARGEABLE, KW_SPREAD }, // Magma
 
 	//MM10
@@ -312,7 +313,7 @@ std::vector<std::vector<int>> keywords = {
 	// 2D
 	// To add : 
 	// SHIELD, MELEE, BOUNCY, TARGETER, RAPID_FIRE, ICE, FIRE, PHYSICAL, SCRAP, TRADITIONNAL
-	// CUTTER, BOOMERANG
+	// CUTTER, BOOMERANG, ANIMAL
 	{ KW_METGUARD1, KW_SHIELD }, // Met Guard 1
 	{ KW_FIRE }, // Melt Creeper
 	{ KW_TARGETER }, // Aiming Laser
@@ -328,12 +329,12 @@ std::vector<std::vector<int>> keywords = {
 	{ }, // Scatter Ring
 	{ KW_RAPID_FIRE, KW_FIRE }, // Yoga Inferno
 	{  }, // Glue Shot
-	{ KW_TARGETER }, // Super Arrow // TRADITIONNAL ?
+	{ KW_TARGETER }, // Super Arrow
 	{ KW_PHYSICAL, KW_SCRAP }, // Ground Dash 
 	{ KW_CUTTER, KW_FIRE, KW_BOOMERANG }, // Hellfire Cutter
 	{ KW_TARGETER }, // Time Bomb
 	{ KW_BOUNCY }, // Wing Spiral
-	{ KW_SHIELD }, // Virus Outbreak
+	{ KW_SHIELD, KW_ANIMAL }, // Virus Outbreak
 	{  }, // Photon Flare
 	{ KW_MELEE, KW_CUTTER, KW_RAPID_FIRE, KW_TRADITIONAL }, // Brandishing Blade
 	{ KW_MELEE, KW_PHYSICAL }, // Doppler Attack // -KW_Physical ?
@@ -348,6 +349,7 @@ std::vector<std::vector<int>> keywords = {
 	{  }, // Ice Gatling
 	{ KW_MELEE }, // Red Hot Kick
 	{ KW_CUTTER, KW_TRADITIONAL }, // Boomerang Cutter
+	{ }, // +KW_SHIELD ? +KW_SCRAP ?
 	
 	// 4D
 	// To add : SHIELD, MELEE
@@ -407,6 +409,7 @@ int recipes[MAX_2345D][2] =
 	{ KW_ICE, KW_RAPID_FIRE },	// Ice Gatling
 	{ KW_FIRE, KW_PHYSICAL },	// Red Hot Kick
 	{ KW_BOOMERANG, KW_CUTTER },	// Boomerang Cutter
+	{ KW_ANIMAL, KW_TARGETER },	// Jawz Hunters
 	
 	// 4D
 	{ KW_METGUARD2, KW_SHIELD },	// Met Guard 3
