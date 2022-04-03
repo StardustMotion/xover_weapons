@@ -100,12 +100,12 @@ std::string names[TOTAL_WEPS] = {
 std::vector<std::string> kwNames = {
     "FIRE", "WATER", "EARTH", "WIND",
 
-    "LIGHT", "BOMB", "ICE", "TIME", "ELEC", "NATURE", "CUTTER",
+    "LIGHT", "BOMB", "ICE", "TIME", "ELEC", "NATURE", "CUTTER",	"SPACE",
 
-    "PHYSICAL", "SOLIDIFIER", "SOUL", "TRADITIONAL", "SCRAP", "ANIMAL"
+    "PHYSICAL", "SOUL", "TRADITIONAL", "SCRAP", "ANIMAL", "MISSILE", "BUBBLE", "ENTERTAINMENT", "SPIKY",
 
     "BOOMERANG", "SHIELD", "CRAWLER", "TARGETER", "BOUNCY", "CHARGEABLE", "MELEE", "SPREAD",
-    "MOBILITY", "RAPID-FIRE", "PROTECTOR", "STATUS", "AOE",
+    "MOBILITY", "RAPID-FIRE", "SURVIVAL", "STATUS", "AOE",	"SPLIT", "TRAP", "SUPERPOWERFUL", "SPIN",
 
     "MEGAMAN_5", "MEGAMAN_BASS",
 
@@ -127,13 +127,18 @@ std::vector<std::string> kwNames = {
 #define KW_ELEC 9
 #define KW_NATURE 10
 #define KW_CUTTER 11
+#define KW_SPACE 12
+// DARK
 
 #define KW_PHYSICAL 20
-#define KW_SOLIDIFIER 21 // SOLID_LIQUID ? hmmm....
-#define KW_SOUL 22
-#define KW_TRADITIONAL 23
-#define KW_SCRAP 24
-#define KW_ANIMAL 25
+#define KW_SOUL 21
+#define KW_TRADITIONAL 22
+#define KW_SCRAP 23
+#define KW_ANIMAL 24
+#define KW_MISSILE 25
+#define KW_BUBBLE 26
+#define KW_ENTERTAINMENT 27
+#define KW_SPIKY 28
 
 // Behavior
 #define KW_BOOMERANG 30
@@ -146,9 +151,14 @@ std::vector<std::string> kwNames = {
 #define KW_SPREAD 37
 #define KW_MOBILITY 38
 #define KW_RAPID_FIRE 39
-#define KW_PROTECTOR 40
+#define KW_SURVIVAL 40
 #define KW_STATUS 41
 #define KW_AOE 42
+#define KW_SPLIT 43
+#define KW_TRAP 44 // au sens "terrain miné"
+#define KW_SUPERPOWERFUL 45
+#define KW_SPIN 46
+//#define KW_UPWARD 47 // do we even care
 
 // Game
 #define KW_GAME_5 85
@@ -181,134 +191,134 @@ std::vector<std::string> kwNames = {
 			////////////////////////		////////////////////////	
 std::vector<std::vector<int>> keywords = {
 	// MM1
-	{ KW_EARTH, KW_PHYSICAL }, // Guts // KW_SPLIT
-	{ KW_BOMB }, // Bomb
+	{ KW_EARTH, KW_PHYSICAL, KW_SPLIT }, // Guts
+	{ KW_BOMB, KW_SUPERPOWERFUL }, // Bomb
 	{ KW_ICE, KW_RAPID_FIRE }, // Ice
 	{ KW_ELEC, KW_SPREAD },  // Elec
-	{ KW_FIRE }, // Fire
+	{ KW_FIRE, KW_SPIN }, // Fire
 	{ KW_CUTTER, KW_BOOMERANG, KW_RM_CUT }, // Cut
 	{ KW_TIME, KW_STATUS, KW_AOE }, // Time
-	{ KW_MELEE, KW_MOBILITY, KW_PHYSICAL, KW_SOLIDIFIER }, // Oil // -SOLIDIFIER ?
+	{ KW_MELEE, KW_MOBILITY, KW_PHYSICAL }, // Oil  ? // terre/eau
 	
 	//MM2
-	{ KW_CRAWLER, KW_WATER }, // Bubble
+	{ KW_CRAWLER, KW_WATER, KW_BUBBLE }, // Bubble
 	{ KW_CUTTER, KW_RAPID_FIRE, KW_SCRAP }, // Metal
-	{ KW_FIRE, KW_CHARGEABLE }, // Heat
-	{ KW_SHIELD, KW_NATURE, KW_PROTECTOR }, // Wood
+	{ KW_FIRE, KW_CHARGEABLE, KW_SUPERPOWERFUL }, // Heat
+	{ KW_SHIELD, KW_NATURE, KW_SURVIVAL }, // Wood
 	{ KW_WIND, KW_SPREAD }, // Air
-	{ KW_RM_QUICK, KW_BOOMERANG, KW_CUTTER, KW_RAPID_FIRE, KW_TRADITIONAL }, // Quick
-	{ KW_BOMB }, // Crash
+	{ KW_RM_QUICK, KW_BOOMERANG, KW_CUTTER, KW_RAPID_FIRE }, // Quick // amusement?
+	{ KW_BOMB, KW_TRAP }, // Crash
 	{ KW_RM_FLASH, KW_TIME, KW_STATUS, KW_AOE }, // Flash
 	
 	//MM3
-	{ KW_TARGETER, KW_SCRAP }, // Magnet
-	{ KW_MELEE, KW_PHYSICAL }, // Top
-	{ KW_NATURE, KW_RAPID_FIRE }, // Needle
+	{ KW_TARGETER, KW_SCRAP, KW_MISSILE }, // Magnet
+	{ KW_MELEE, KW_PHYSICAL, KW_SUPERPOWERFUL, KW_SPIN }, // Top
+	{ KW_NATURE, KW_RAPID_FIRE, KW_SPIKY }, // Needle
 	{ KW_CUTTER, KW_BOOMERANG, KW_TRADITIONAL }, // Shadow
-	{ KW_LIGHT, KW_BOUNCY, KW_SOUL }, // Gemini
+	{ KW_LIGHT, KW_BOUNCY, KW_SOUL }, // Gemini // lespace
 	{ KW_CRAWLER, KW_NATURE, KW_ANIMAL }, // Snake
-	{ KW_PHYSICAL }, // Hard
+	{ KW_PHYSICAL, KW_MOBILITY }, // Hard
 	{ KW_ELEC, KW_STATUS }, // Spark
 
 	//MM4
 	{ KW_BOMB, KW_EARTH }, // Drill
-	{ KW_BOOMERANG, KW_CUTTER, KW_RM_RING, KW_TRADITIONAL }, // Ring
-	{ KW_RM_DUST, KW_SCRAP }, // Dust // KW_SPLIT
+	{ KW_RM_RING, KW_BOOMERANG, KW_CUTTER, KW_TRADITIONAL }, // Ring
+	{ KW_RM_DUST, KW_SCRAP, KW_SPLIT }, // Dust
 	{ KW_FIRE, KW_CHARGEABLE }, // Pharaoh
-	{ KW_SHIELD, KW_PROTECTOR, KW_SOUL }, // Skull
-	{ KW_TARGETER }, // Dive
+	{ KW_SHIELD, KW_SURVIVAL, KW_SOUL }, // Skull
+	{ KW_TARGETER, KW_MISSILE }, // Dive
 	{ KW_WATER, KW_AOE }, // Toad
 	{ KW_LIGHT, KW_STATUS, KW_AOE }, // Bright
 
 	//MM5
 	{ KW_BOMB, KW_GAME_5 }, // Napalm
 	{ KW_MELEE, KW_MOBILITY, KW_GAME_5, KW_PHYSICAL }, // Charge
-	{ KW_WIND, KW_CUTTER, KW_GAME_5, KW_SCRAP  }, // Gyro // KW_SPLIT
-	{ KW_SPREAD, KW_GAME_5, KW_EARTH }, // Stone
+	{ KW_WIND, KW_CUTTER, KW_GAME_5, KW_SCRAP, KW_SPLIT  }, // Gyro
+	{ KW_SPREAD, KW_GAME_5, KW_EARTH, KW_SPIN }, // Stone
 	{ KW_CRAWLER, KW_WATER, KW_GAME_5, KW_RAPID_FIRE }, // Wave
-	{ KW_BOUNCY, KW_GAME_5, KW_EARTH }, // Crystal // KW_SPLIT
-	{ KW_SHIELD, KW_GAME_5 }, // Star
-	{ KW_GAME_5, KW_AOE }, // Gravity
+	{ KW_BOUNCY, KW_GAME_5, KW_EARTH, KW_SPLIT }, // Crystal
+	{ KW_SHIELD, KW_GAME_5, KW_SPACE }, // Star
+	{ KW_GAME_5, KW_AOE, KW_SPACE }, // Gravity trespuissant
 
 	//MM6
 	{ KW_ICE, KW_SPREAD }, // Blizzard
-	{ KW_FIRE }, // Flame
+	{ KW_FIRE, KW_TRAP }, // Flame
 	{ KW_RM_YAMATO, KW_CUTTER, KW_RAPID_FIRE, KW_TRADITIONAL }, // Yamato
-	{ KW_SHIELD, KW_NATURE, KW_PROTECTOR }, // Plant
+	{ KW_SHIELD, KW_NATURE, KW_SURVIVAL }, // Plant
 	{ KW_NATURE, KW_CUTTER, KW_TRADITIONAL }, // Tomahawk
 	{ KW_CRAWLER, KW_WIND }, // Wind
-	{ KW_BOOMERANG, KW_TRADITIONAL }, // Knight
+	{ KW_BOOMERANG, KW_TRADITIONAL, KW_SPIKY }, // Knight
 	{ KW_TIME, KW_AOE, KW_SOUL }, // Centaur
 
 	// MM7
-	{ KW_ICE }, // Freeze // KW_SPLIT
+	{ KW_ICE, KW_SPLIT }, // Freeze
 	{ KW_CHARGEABLE, KW_BOUNCY }, // Shade
 	{ KW_CHARGEABLE, KW_BOUNCY, KW_SPREAD, KW_SCRAP }, // Spring
-	{ KW_BOMB }, // Burst
+	{ KW_BOMB, KW_TRAP, KW_BUBBLE }, // Burst
 	{ KW_FIRE, KW_SHIELD, KW_MOBILITY, KW_CRAWLER }, // Turbo
-	{ KW_SHIELD, KW_SPREAD, KW_CHARGEABLE, KW_SCRAP }, // Junk // KW_PROTECTOR
-	{ KW_MELEE, KW_PHYSICAL }, // Slash // KW_NATURE // KW_CUTTER
-	{ KW_ELEC, KW_LIGHT }, // Cloud // KW_SPLIT
+	{ KW_SHIELD, KW_SPREAD, KW_CHARGEABLE, KW_SCRAP }, // Junk
+	{ KW_MELEE, KW_PHYSICAL }, // Slash
+	{ KW_ELEC, KW_LIGHT, KW_SPLIT }, // Cloud
 
 	// MM8
-	{ KW_EARTH, KW_AOE }, // Astro8
-	{ KW_FIRE, KW_MELEE, KW_TRADITIONAL }, // Sword // KW_CUTTER ?
-	{ KW_ELEC, KW_MELEE, KW_MOBILITY }, // Clown // KW_PHYSICAL ? minus KW_MOBILITY ?
-	{ KW_TARGETER, KW_CHARGEABLE }, // Search //spread?
-	{ KW_WATER, KW_RAPID_FIRE }, // Aqua
-	{ KW_BOUNCY, KW_MOBILITY }, // MegaBall 
-	{ KW_LIGHT, KW_BOMB }, // Grenade
+	{ KW_EARTH, KW_AOE, KW_SPACE }, // Astro8
+	{ KW_FIRE, KW_MELEE, KW_TRADITIONAL }, // Sword
+	{ KW_ELEC, KW_MELEE, KW_MOBILITY }, // Clown
+	{ KW_TARGETER, KW_CHARGEABLE, KW_MISSILE, KW_SPREAD }, // Search
+	{ KW_WATER, KW_RAPID_FIRE, KW_ENTERTAINMENT }, // Aqua
+	{ KW_BOUNCY, KW_MOBILITY, KW_ENTERTAINMENT }, // MegaBall 
+	{ KW_LIGHT, KW_BOMB, KW_TRAP }, // Grenade
 	{ KW_CRAWLER, KW_ICE }, // Frost
-	{ KW_WIND, KW_MOBILITY }, // Tengu8
+	{ KW_WIND, KW_MOBILITY, KW_TRAP }, // Tengu8
 
 	//MMB
-	{ KW_GAME_BASS, KW_CUTTER, KW_WIND, KW_MELEE, KW_BOUNCY }, // TenguB  // KW_MOBILITY
+	{ KW_GAME_BASS, KW_CUTTER, KW_WIND, KW_MELEE, KW_BOUNCY }, // TenguB
 	{ KW_FIRE, KW_RAPID_FIRE, KW_GAME_BASS }, // Burner
-	{ KW_EARTH, KW_GAME_BASS }, // Ground // -KW_SPREAD; KW_SPLIT ? NOT A SPREAD.
-	{ KW_BOOMERANG, KW_SOUL, KW_GAME_BASS }, // Magic
-	{ KW_TARGETER, KW_BOMB, KW_GAME_BASS }, // Pirate
+	{ KW_EARTH, KW_GAME_BASS, KW_SPLIT }, // Ground
+	{ KW_BOOMERANG, KW_SOUL, KW_GAME_BASS, KW_ENTERTAINMENT }, // Magic
+	{ KW_TARGETER, KW_BOMB, KW_GAME_BASS, KW_TRAP }, // Pirate
 	{ KW_TARGETER, KW_LIGHT, KW_SOUL, KW_GAME_BASS }, // AstroB
-	{ KW_SHIELD, KW_ICE, KW_BOUNCY, KW_GAME_BASS, KW_CRAWLER }, // Cold // KW_PROTECTOR  KW_MOBILITY
+	{ KW_ICE, KW_GAME_BASS, KW_SHIELD, KW_BOUNCY }, // Cold
 	{ KW_LIGHT, KW_ELEC, KW_AOE, KW_GAME_BASS }, // Dynamo
 
 	// MM9
 	{ KW_CRAWLER, KW_ELEC, KW_BOUNCY, KW_RAPID_FIRE }, // Plug
 	{ KW_LIGHT, KW_TRADITIONAL }, // Splash
-	{ KW_TARGETER, KW_AOE }, // Galaxy :: BOMB
+	{ KW_TARGETER, KW_AOE, KW_SPACE }, // Galaxy
 	{ KW_SHIELD, KW_EARTH }, // Jewel
-	{ KW_SOLIDIFIER, KW_EARTH, KW_STATUS }, // Concrete
+	{ KW_EARTH, KW_STATUS }, // Concrete
 	{ KW_WIND, KW_MOBILITY, KW_AOE }, // Tornado
-	{ KW_TARGETER, KW_NATURE, KW_ANIMAL }, // Hornet
+	{ KW_TARGETER, KW_NATURE, KW_ANIMAL, KW_SPIKY }, // Hornet
 	{ KW_FIRE, KW_CHARGEABLE, KW_SPREAD }, // Magma
 
 	//MM10
-	{ KW_FIRE }, // Solar // KW_SPLIT
-	{ KW_CUTTER, KW_MOBILITY, KW_CRAWLER, KW_SCRAP }, // Nitro
-	{ KW_BOUNCY }, // Strike
-	{ KW_ELEC }, // Sheep
-	{ KW_BOMB, KW_TARGETER }, // Commando
-	{ KW_ICE, KW_SOLIDIFIER, KW_STATUS }, // Chill
-	{ KW_SHIELD, KW_WATER, KW_PROTECTOR }, // Pump
-	{ KW_CUTTER, KW_SPREAD, KW_RAPID_FIRE, KW_TRADITIONAL }, // Blade
+	{ KW_FIRE, KW_SPLIT }, // Solar // piege?see v6b
+	{ KW_MOBILITY, KW_SCRAP, KW_CUTTER }, // Nitro
+	{ KW_BOUNCY, KW_ENTERTAINMENT }, // Strike
+	{ KW_ELEC, KW_TRAP }, // Sheep
+	{ KW_BOMB, KW_TARGETER, KW_MISSILE }, // Commando
+	{ KW_ICE, KW_STATUS, KW_TRAP, KW_SPIKY }, // Chill
+	{ KW_SHIELD, KW_WATER, KW_SPIN, KW_BUBBLE, KW_SURVIVAL, KW_SPREAD }, // Pump
+	{ KW_RAPID_FIRE, KW_SPREAD, KW_CUTTER, KW_TRADITIONAL  }, // Blade
 	
 	//MMV
-	{ KW_PROTECTOR, KW_SOUL }, // Mercury
-	{ KW_WATER, KW_BOMB }, // Venus
-	{ KW_BOMB }, // Mars
-	{ KW_WATER }, // Neptune // KW_SPLIT
-	{ KW_ELEC, KW_MELEE }, // Jupiter
-	{ KW_SHIELD, KW_PROTECTOR }, // Saturn
-	{ KW_EARTH, KW_PHYSICAL }, // Uranus // KW_SPLIT
+	{ KW_SURVIVAL, KW_SOUL, KW_SPACE }, // Mercury
+	{ KW_WATER, KW_BOMB, KW_BUBBLE }, // Venus
+	{ KW_BOMB, KW_MISSILE }, // Mars
+	{ KW_WATER, KW_SPLIT }, // Neptune
+	{ KW_ELEC, KW_MELEE }, // Jupiter // rapedetir
+	{ KW_SHIELD, KW_SPLIT, KW_SPACE, KW_SPIN }, // Saturn
+	{ KW_EARTH, KW_PHYSICAL, KW_SPLIT }, // Uranus
 	{ KW_CHARGEABLE, KW_MELEE, KW_MOBILITY, KW_PHYSICAL }, // Pluto
-	{ KW_LIGHT, KW_TARGETER, KW_SOUL }, // Terra
+	{ KW_LIGHT, KW_TARGETER, KW_SOUL }, // Terra	//lespace
 
 	//MMK
-	{ KW_MELEE, KW_MOBILITY, KW_TIME  }, // Quint // KW8physical ?
-	{ KW_BOMB }, // Ballade
-	{ KW_CUTTER, KW_RAPID_FIRE, KW_SCRAP }, // Punk // +BOUNCY?
-	{ KW_SHIELD, KW_PROTECTOR }, // Enker :: CHARGEABLE
+	{ KW_MELEE, KW_MOBILITY, KW_TIME, KW_SUPERPOWERFUL }, // Quint
+	{ KW_BOMB, KW_ENTERTAINMENT }, // Ballade
+	{ KW_RAPID_FIRE, KW_CUTTER, KW_SCRAP }, // Punk
+	{ KW_SHIELD, KW_SURVIVAL }, // Enker
 	
-	{ KW_LIGHT, KW_CHARGEABLE, KW_CRAWLER, KW_SPREAD }, // Ra Thor 
+	{ KW_LIGHT, KW_CHARGEABLE, KW_CRAWLER, KW_SPREAD, KW_SUPERPOWERFUL }, // Ra Thor
 	
 	// 2D
 	// To add : 
@@ -349,7 +359,7 @@ std::vector<std::vector<int>> keywords = {
 	{  }, // Ice Gatling
 	{ KW_MELEE }, // Red Hot Kick
 	{ KW_CUTTER, KW_TRADITIONAL }, // Boomerang Cutter
-	{ }, // +KW_SHIELD ? +KW_SCRAP ?
+	{ }, // Jawz Hunters +KW_SHIELD ? +KW_SCRAP ?
 	
 	// 4D
 	// To add : SHIELD, MELEE
@@ -381,7 +391,7 @@ int recipes[MAX_2345D][2] =
 	{ KW_RM_QUICK, KW_FIRE },	// Delay Flame
 	{ KW_RM_DUST, KW_WIND },	// Recycle Inhaler
 	{ KW_NATURE, KW_MELEE },	// Forest Whip
-	{ KW_TARGETER, KW_BOMB },	// Blast Missile
+	{ KW_MISSILE, KW_BOMB },	// Blast Missile
 	{ KW_RM_YAMATO, KW_MELEE },	// Thousand Spear
 	{ KW_ICE, KW_CHARGEABLE },	// White Rose Cluster
 	{ KW_BOOMERANG, KW_NATURE },	// Leaf Boomerang
@@ -389,13 +399,13 @@ int recipes[MAX_2345D][2] =
 	{ KW_BOUNCY, KW_CUTTER },	// Sonic Slicer
 	{ KW_RM_RING, KW_SPREAD },	// Scatter Ring
 	{ KW_FIRE, KW_MOBILITY },	// Yoga Inferno
-	{ KW_WATER, KW_SOLIDIFIER },	// Glue Shot
+	{ KW_WATER, KW_STATUS },	// Glue Shot
 	{ KW_GAME_5, KW_GAME_5 },	// Super Arrow
 	{ KW_EARTH, KW_PHYSICAL },	// Ground Dash
 	{ KW_RM_CUT, KW_FIRE },	// Hellfire Cutter
 	{ KW_TIME, KW_BOMB },	// Time Bomb
 	{ KW_WIND, KW_MOBILITY },	// Wing Spiral
-	{ KW_PROTECTOR, KW_STATUS },	// Virus Outbreak
+	{ KW_SURVIVAL, KW_STATUS },	// Virus Outbreak
 	{ KW_LIGHT, KW_AOE },	// Photon Flare
 	{ KW_TRADITIONAL, KW_CHARGEABLE },	// Brandishing Blade
 	{ KW_SOUL, KW_GAME_BASS },	// Doppler Attack
@@ -558,6 +568,8 @@ int main(int argc, char *argv[]) {
 	std::cin >> debug;
 	if (!debug) { std::cout.setstate(std::ios_base::failbit); }
     countKeywords();
+	std::cout << "\nEnter a key to go on.\n";
+	system("pause");
     computeDatabase();
 
 
